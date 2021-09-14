@@ -1,6 +1,7 @@
 ---
 title: "Ch.4 The Tidyverse - 1"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -68,7 +69,7 @@ d. co2 is not tidy: to be tidy we would have to wrangle it to have three columns
 
 ```{r}
 answer1 <- "d. co2 is not tidy: to be tidy we would have to wrangle it to have three columns (year, month and value), then each co2 observation would have a row."
-answer
+answer1
 ```
 
 2. Examine the built-in dataset ChickWeight. Which of the following is true:
