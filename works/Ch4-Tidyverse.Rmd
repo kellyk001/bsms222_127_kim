@@ -1,17 +1,25 @@
 ---
 title: "Ch.4 The Tidyverse - 1"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 Up to now we have been manipulating vectors by reordering and subsetting them through indexing. However, once we start more advanced analyses, the preferred unit for data storage is not the vector but the data frame. In this chapter we learn to work directly with data frames, which greatly facilitate the organization of information. We will be using data frames for the majority of this book. We will focus on a specific data format referred to as tidy and on specific collection of packages that are particularly helpful for working with tidy data referred to as the tidyverse.
 
 We can load all the tidyverse packages at once by installing and loading the tidyverse package:
 ```{r}
+local({r <- getOption("repos")
+       r["CRAN"] <- "http://cran.r-project.org"
+       options(repos=r)})
 install.packages("tidyverse")
-library(tidyverse)
+
+```
+```{r}
+#testing the function 'pander'
+library(pander)
+pander(murders)
 ```
 
 
@@ -59,7 +67,7 @@ Although not immediately obvious, as you go through the book you will start to a
 ## 4.2 Exercises
 1. Examine the built-in dataset co2. Which of the following is true:
 ```{r}
-data("co2")
+pander(co2)
 ```
 
 a. co2 is tidy data: it has one year for each row.
@@ -74,7 +82,7 @@ answer1
 
 2. Examine the built-in dataset ChickWeight. Which of the following is true:
 ```{r}
-data("ChickWeight")
+pander(ChickWeight)
 ```
 
 a. ChickWeight is not tidy: each chick has more than one row.
@@ -82,13 +90,14 @@ b. ChickWeight is tidy: each observation (a weight) is represented by one row. T
 c. ChickWeight is not tidy: we are missing the year column.
 d. ChickWeight is tidy: it is stored in a data frame.
 ```{r}
-answe2 <- "b. ChickWeight is tidy: each observation (a weight) is represented by one row. The chick from which this measurement came is one of the variables."
-answer
+answer2 <- "b. ChickWeight is tidy: each observation (a weight) is represented by one row. The chick from which this measurement came is one of the variables."
+answer2
 ```
 
 3. Examine the built-in dataset BOD. Which of the following is true:
 ```{r}
 data("BOD")
+pander(BOD)
 ```
 
 a. BOD is not tidy: it only has six rows.
@@ -97,14 +106,14 @@ c. BOD is tidy: each row is an observation with two values (time and demand)
 d. BOD is tidy: all small datasets are tidy by definition.
 ```{r}
 answer3 <- "c. BOD is tidy: each row is an observation with two values (time and demand)"
-answer
+answer3
 ```
 
 4. Which of the following built-in datasets is tidy (you can pick more than one):
 ```{r}
-data("BJsales",EuStockMarkets, DNase,Formaldehyde,Orange,UCBAdmissions)
-data("UCBAdmissions")
-```
+pander(BJsales)
+pander(UCBAdmissions)
+``` 
 
 a. BJsales
 b. EuStockMarkets
@@ -126,6 +135,7 @@ We want all the necessary information for our analysis to be included in the dat
 ```{r}
 library(dslabs)
 data("murders")
+library(dplyr)
 murders <- mutate(murders, rate = total / population * 100000)
 ```
 
@@ -136,7 +146,7 @@ This is one of dplyr’s main features. Functions in this package, such as mutat
 
 We can see that the new column is added:
 ```{r}
-head(murders)
+head(murders) %>% pander()
 #>        state abb region population total rate
 #> 1    Alabama  AL  South    4779736   135 2.82
 #> 2     Alaska  AK   West     710231    19 2.68
@@ -144,6 +154,7 @@ head(murders)
 #> 4   Arkansas  AR  South    2915918    93 3.19
 #> 5 California  CA   West   37253956  1257 3.37
 #> 6   Colorado  CO   West    5029196    65 1.29
+
 ```
 
 
@@ -152,7 +163,7 @@ Although we have overwritten the original murders object, this does not change t
 ### 4.3.2 Subsetting with filter
 Now suppose that we want to filter the data table to only show the entries for which the murder rate is lower than 0.71. To do this we use the filter function, which takes the data table as the first argument and then the conditional statement as the second. Like mutate, we can use the unquoted variable names from murders inside the function and it will know we mean the columns and not objects in the workspace.
 ```{r}
-filter(murders, rate <= 0.71)
+filter(murders, rate <= 0.71) %>% pander()
 #>           state abb        region population total  rate
 #> 1        Hawaii  HI          West    1360301     7 0.515
 #> 2          Iowa  IA North Central    3046355    21 0.689
@@ -166,7 +177,7 @@ filter(murders, rate <= 0.71)
 Although our data table only has six columns, some data tables include hundreds. If we want to view just a few, we can use the dplyr select function. In the code below we select three columns, assign this to a new object and then filter the new object:
 ```{r}
 new_table <- select(murders, state, region, rate)
-filter(new_table, rate <= 0.71)
+filter(new_table, rate <= 0.71)%>% pander()
 #>           state        region  rate
 #> 1        Hawaii          West 0.515
 #> 2          Iowa North Central 0.689
@@ -208,18 +219,18 @@ murders <- mutate(murders, rank = rank(-rate))
 
 3. With dplyr, we can use select to show only certain columns. For example, with this code we would only show the states and population sizes:
 ```{r}
-select(murders, state, population) %>% head()
+select(murders, state, population) %>% head() %>% pander()
 ```
 
 
 Use select to show the state names and abbreviations in murders. Do not redefine murders, just show the results.
 ```{r}
-select(murders, state, abb)
+select(murders, state, abb) %>% pander()
 ```
 
 4. The dplyr function filter is used to choose specific rows of the data frame to keep. Unlike select which is for columns, filter is for rows. For example, you can show just the New York row like this:
 ```{r}
-filter(murders, state == "New York")
+filter(murders, state == "New York") %>% pander()
 ```
 
 
@@ -227,7 +238,7 @@ You can use other logical vectors to filter rows.
 
 Use filter to show the top 5 states with the highest murder rates. After we add murder rate and rank, do not change the murders dataset, just show the result. Remember that you can filter based on the rank column.
 ```{r}
-filter(murders, rank < 6)
+filter(murders, rank < 6) %>% pander()
 ```
 
 5. We can remove rows using the != operator. For example, to remove Florida, we would do this:
@@ -244,7 +255,7 @@ nrow(no_south)
 
 6. We can also use %in% to filter with dplyr. You can therefore see the data from New York and Texas like this:
 ```{r}
-filter(murders, state %in% c("New York", "Texas"))
+filter(murders, state %in% c("New York", "Texas")) %>% pander()
 ```
 
 
@@ -256,13 +267,13 @@ nrow(murders_nw)
 
 7. Suppose you want to live in the Northeast or West and want the murder rate to be less than 1. We want to see the data for the states satisfying these options. Note that you can use logical operators with filter. Here is an example in which we filter to keep only small states in the Northeast region.
 ```{r}
-filter(murders, population < 5000000 & region == "Northeast")
+filter(murders, population < 5000000 & region == "Northeast") %>% pander()
 ```
 
 Make sure murders has been defined with rate and rank and still has all states. Create a table called my_states that contains rows for states satisfying both the conditions: it is in the Northeast or West and the murder rate is less than 1. Use select to show only the state name, the rate, and the rank.
 ```{r}
 my_states <- filter(murders, region %in% c("Northeast", "West") & rate < 1)
-select(my_states, state, rate, rank)
+select(my_states, state, rate, rank) %>% pander()
 ```
 
 ## 4.5 The pipe: %>%
@@ -275,7 +286,7 @@ original data → select → filter
 
 For such an operation, we can use the pipe %>%. The code looks like this:
 ```{r}
-murders %>% select(state, region, rate) %>% filter(rate <= 0.71)
+murders %>% select(state, region, rate) %>% filter(rate <= 0.71) %>% pander()
 #>           state        region  rate
 #> 1        Hawaii          West 0.515
 #> 2          Iowa North Central 0.689
@@ -333,7 +344,7 @@ In the solution to the previous exercise, we did the following:
 my_states <- filter(murders, region %in% c("Northeast", "West") & 
                       rate < 1)
 
-select(my_states, state, rate, rank)
+select(my_states, state, rate, rank) %>% pander()
 ```
 
 
@@ -341,7 +352,7 @@ The pipe %>% permits us to perform both operations sequentially without having t
 ```{r}
 mutate(murders, rate =  total / population * 100000, 
        rank = rank(-rate)) %>%
-  select(state, rate, rank)
+  select(state, rate, rank) %>% pander()
 ```
 
 
@@ -352,16 +363,16 @@ Repeat the previous exercise, but now instead of creating a new object, show the
 murders <- mutate(murders, rate =  total / population * 100000, rank = rank(-rate))
 
 filter(murders, region %in% c("Northeast", "West") & rate < 1)%>%
-select(state, rate, rank)
+select(state, rate, rank) %>% pander()
 
 ```
 
 2. Reset murders to the original table by using data(murders). Use a pipe to create a new data frame called my_states that considers only states in the Northeast or West which have a murder rate lower than 1, and contains only the state, rate and rank columns. The pipe should also have four components separated by three %>%. The code should look something like this:
 ```{r}
-my_states <- murders %>%
-  mutate SOMETHING %>% 
-  filter SOMETHING %>% 
-  select SOMETHING
+#my_states <- murders %>%
+  #mutate SOMETHING %>% 
+  #filter SOMETHING %>% 
+  #select SOMETHING
 ```
 
 **Answer:**
@@ -371,7 +382,7 @@ my_states <- murders %>%
   mutate(murders, rate =  total / population * 100000, rank = rank(-rate))%>%
   filter(region %in% c("Northeast", "West") & rate < 1)%>%
   select(state, rate, rank)
-my_states
+my_states %>% pander()
 #Be careful! You should omit the first argument when you use a pipe.
 ```
 
