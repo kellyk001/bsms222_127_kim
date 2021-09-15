@@ -1,0 +1,27 @@
+---
+title: "15/Sep_Quiz"
+output: html_notebook
+---
+
+```{r}
+#quiz: ASD vs. non-ASD: how many effect groups? (tidyverse)
+
+install.packages('rio')
+d = rio::import('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6015533/bin/NIHMS957592-supplement-1.xlsx')
+library(tidyverse)
+
+#First, let's create a function that counts how many effect groups are there in each of ASD categories: Y, Maybe, N, Probably not. Then, let's loop it.
+
+x<- c("Y","Maybe", "N","Probably not") 
+sapply(x,function(x){data.frame(d %>% select(Effect, ASD) %>% table()) %>% filter(ASD == x & Freq != 0) %>% nrow()})
+
+#Unfortunately, I failed to write a code that figures out whether the effect groups *overlap* between ASD categories.
+#What I mean is that both "Y" and "Maybe" have 'Nonsense' effect category.. So I cannot simply add (6+1=7) and say, ASD patients(Y&Maybe) have 7 effect groups.
+
+#Anyways, let's make a table to double check if I've counted well.
+
+library(pander)
+d %>% select(Effect, ASD) %>% table() %>% pander() 
+
+#answer: ASD(Maybe)= 1 group & ASD(Y)= 6, non-ASD(Probably not) = 1 group, non-ASD(N) = 3 groups
+```
