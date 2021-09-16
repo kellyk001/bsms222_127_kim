@@ -217,83 +217,33 @@ pre code {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3F1aXo6IEFTRCB2cy4gbm9uLUFTRDogaG93IG1hbnkgZWZmZWN0IGdyb3Vwcz8gKHRpZHl2ZXJzZSlcblxuaW5zdGFsbC5wYWNrYWdlcygncmlvJylcbmBgYCJ9 -->
-<pre class="r"><code>#quiz: ASD vs. non-ASD: how many effect groups? (tidyverse)
-
-install.packages(&#39;rio&#39;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueDwtIGMoXCJZXCIsXCJNYXliZVwiLCBcIk5cIixcIlByb2JhYmx5IG5vdFwiKSBcbnNhcHBseSh4LGZ1bmN0aW9uKHgpe2RhdGEuZnJhbWUoZCAlPiUgc2VsZWN0KEVmZmVjdCwgQVNEKSAlPiUgdGFibGUoKSkgJT4lIGZpbHRlcihBU0QgPT0geCAmIEZyZXEgIT0gMCl9KVxuXG5gYGAifQ== -->
+<pre class="r"><code>x&lt;- c(&quot;Y&quot;,&quot;Maybe&quot;, &quot;N&quot;,&quot;Probably not&quot;) 
+sapply(x,function(x){data.frame(d %&gt;% select(Effect, ASD) %&gt;% table()) %&gt;% filter(ASD == x &amp; Freq != 0)})
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gaW5zdGFsbC5wYWNrYWdlcyA6IFVwZGF0aW5nIGxvYWRlZCBwYWNrYWdlc1xuIn0= -->
-<pre><code>Error in install.packages : Updating loaded packages</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgIFkgICAgICAgICBNYXliZSAgICBOICAgICAgICAgUHJvYmFibHkgbm90ICAgICAgICAgICBcbkVmZmVjdCBmYWN0b3IsNiAgTm9uc2Vuc2UgZmFjdG9yLDMgIFBvcHVsYXRpb25WYXJpYW50SW5FeEFDXG5BU0QgICAgZmFjdG9yLDYgIE1heWJlICAgIGZhY3RvciwzICBQcm9iYWJseSBub3QgICAgICAgICAgIFxuRnJlcSAgIGludGVnZXIsNiAxICAgICAgICBpbnRlZ2VyLDMgMSAgICAgICAgICAgICAgICAgICAgICBcbiJ9 -->
+<pre><code>       Y         Maybe    N         Probably not           
+Effect factor,6  Nonsense factor,3  PopulationVariantInExAC
+ASD    factor,6  Maybe    factor,3  Probably not           
+Freq   integer,6 1        integer,3 1                      </code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZCA9IHJpbzo6aW1wb3J0KCdodHRwczovL3d3dy5uY2JpLm5sbS5uaWguZ292L3BtYy9hcnRpY2xlcy9QTUM2MDE1NTMzL2Jpbi9OSUhNUzk1NzU5Mi1zdXBwbGVtZW50LTEueGxzeCcpXG5pbnN0YWxsLnBhY2thZ2VzKFwicmlvXCIpXG5gYGAifQ== -->
-<pre class="r"><code>d = rio::import(&#39;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6015533/bin/NIHMS957592-supplement-1.xlsx&#39;)
-install.packages(&quot;rio&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV0FSTklORzogUnRvb2xzIGlzIHJlcXVpcmVkIHRvIGJ1aWxkIFIgcGFja2FnZXMgYnV0IGlzIG5vdCBjdXJyZW50bHkgaW5zdGFsbGVkLiBQbGVhc2UgZG93bmxvYWQgYW5kIGluc3RhbGwgdGhlIGFwcHJvcHJpYXRlIHZlcnNpb24gb2YgUnRvb2xzIGJlZm9yZSBwcm9jZWVkaW5nOlxuXG5odHRwczovL2NyYW4ucnN0dWRpby5jb20vYmluL3dpbmRvd3MvUnRvb2xzL1xu4oCYQzovVXNlcnMvTWluU2VvIEtpbS9Eb2N1bWVudHMvUi93aW4tbGlicmFyeS80LjHigJnsnZgg7JyE7LmY7JeQIO2MqO2CpOyngCjrk6Qp7J2EIOyEpOy5mO2VqeuLiOuLpC5cbijsmZzrg5DtlZjrqbQg4oCYbGli4oCZ6rCAIOyngOygleuQmOyngCDslYrslZjquLAg65WM66y47J6F64uI64ukKVxudHJ5aW5nIFVSTCAnaHR0cHM6Ly9jcmFuLnJzdHVkaW8uY29tL2Jpbi93aW5kb3dzL2NvbnRyaWIvNC4xL3Jpb18wLjUuMjcuemlwJ1xuQ29udGVudCB0eXBlICdhcHBsaWNhdGlvbi96aXAnIGxlbmd0aCA1MzY3MjAgYnl0ZXMgKDUyNCBLQilcbmRvd25sb2FkZWQgNTI0IEtCXG4ifQ== -->
-<pre><code>WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
-
-https://cran.rstudio.com/bin/windows/Rtools/
-‘C:/Users/MinSeo Kim/Documents/R/win-library/4.1’의 위치에 패키지(들)을 설치합니다.
-(왜냐하면 ‘lib’가 지정되지 않았기 때문입니다)
-trying URL &#39;https://cran.rstudio.com/bin/windows/contrib/4.1/rio_0.5.27.zip&#39;
-Content type &#39;application/zip&#39; length 536720 bytes (524 KB)
-downloaded 524 KB</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDigJhyaW/igJkgc3VjY2Vzc2Z1bGx5IHVucGFja2VkIGFuZCBNRDUgc3VtcyBjaGVja2VkXG5cblRoZSBkb3dubG9hZGVkIGJpbmFyeSBwYWNrYWdlcyBhcmUgaW5cblx0QzpcXFVzZXJzXFxNaW5TZW8gS2ltXFxBcHBEYXRhXFxMb2NhbFxcVGVtcFxcUnRtcHNMNHpDdVxcZG93bmxvYWRlZF9wYWNrYWdlc1xuIn0= -->
-<pre><code>package ‘rio’ successfully unpacked and MD5 sums checked
-
-The downloaded binary packages are in
-    C:\Users\MinSeo Kim\AppData\Local\Temp\RtmpsL4zCu\downloaded_packages</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5cbiNGaXJzdCwgbGV0J3MgY3JlYXRlIGEgZnVuY3Rpb24gdGhhdCBjb3VudHMgaG93IG1hbnkgZWZmZWN0IGdyb3VwcyBhcmUgdGhlcmUgaW4gZWFjaCBvZiBBU0QgY2F0ZWdvcmllczogWSwgTWF5YmUsIE4sIFByb2JhYmx5IG5vdC4gVGhlbiwgbGV0J3MgbG9vcCBpdC5cblxueDwtIGMoXCJZXCIsXCJNYXliZVwiLCBcIk5cIixcIlByb2JhYmx5IG5vdFwiKSBcbnNhcHBseSh4LGZ1bmN0aW9uKHgpe2RhdGEuZnJhbWUoZCAlPiUgc2VsZWN0KEVmZmVjdCwgQVNEKSAlPiUgdGFibGUoKSkgJT4lIGZpbHRlcihBU0QgPT0geCAmIEZyZXEgIT0gMCkgJT4lIG5yb3coKX0pXG5gYGAifQ== -->
-<pre class="r"><code>library(tidyverse)
-
-#First, let&#39;s create a function that counts how many effect groups are there in each of ASD categories: Y, Maybe, N, Probably not. Then, let&#39;s loop it.
-
-x&lt;- c(&quot;Y&quot;,&quot;Maybe&quot;, &quot;N&quot;,&quot;Probably not&quot;) 
-sapply(x,function(x){data.frame(d %&gt;% select(Effect, ASD) %&gt;% table()) %&gt;% filter(ASD == x &amp; Freq != 0) %&gt;% nrow()})</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICBZICAgICAgICBNYXliZSAgICAgICAgICAgIE4gUHJvYmFibHkgbm90IFxuICAgICAgICAgICA2ICAgICAgICAgICAgMSAgICAgICAgICAgIDMgICAgICAgICAgICAxIFxuIn0= -->
-<pre><code>           Y        Maybe            N Probably not 
-           6            1            3            1 </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI1VuZm9ydHVuYXRlbHksIEkgZmFpbGVkIHRvIHdyaXRlIGEgY29kZSB0aGF0IGZpZ3VyZXMgb3V0IHdoZXRoZXIgdGhlIGVmZmVjdCBncm91cHMgKm92ZXJsYXAqIGJldHdlZW4gQVNEIGNhdGVnb3JpZXMuXG4jV2hhdCBJIG1lYW4gaXMgdGhhdCBib3RoIFwiWVwiIGFuZCBcIk1heWJlXCIgaGF2ZSAnTm9uc2Vuc2UnIGVmZmVjdCBjYXRlZ29yeS4uIFNvIEkgY2Fubm90IHNpbXBseSBhZGQgKDYrMT03KSBhbmQgc2F5LCBBU0QgcGF0aWVudHMoWSZNYXliZSkgaGF2ZSA3IGVmZmVjdCBncm91cHMuXG5cbiNBbnl3YXlzLCBsZXQncyBtYWtlIGEgdGFibGUgdG8gZG91YmxlIGNoZWNrIGlmIEkndmUgY291bnRlZCB3ZWxsLlxuXG5saWJyYXJ5KHBhbmRlcilcbmQgJT4lIHNlbGVjdChFZmZlY3QsIEFTRCkgJT4lIHRhYmxlKCkgJT4lIHBhbmRlcigpIFxuYGBgIn0= -->
-<pre class="r"><code>#Unfortunately, I failed to write a code that figures out whether the effect groups *overlap* between ASD categories.
-#What I mean is that both &quot;Y&quot; and &quot;Maybe&quot; have &#39;Nonsense&#39; effect category.. So I cannot simply add (6+1=7) and say, ASD patients(Y&amp;Maybe) have 7 effect groups.
-
-#Anyways, let&#39;s make a table to double check if I&#39;ve counted well.
-
-library(pander)
-d %&gt;% select(Effect, ASD) %&gt;% table() %&gt;% pander() </code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1cbiAgICAgICAgICAgJm5ic3A7ICAgICAgICAgICAgICBNYXliZSAgIE4gICAgUHJvYmFibHkgbm90ICAgVW5rbm93biAgIFkgIFxuLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gLS0tLS0tLSAtLS0tIC0tLS0tLS0tLS0tLS0tIC0tLS0tLS0tLSAtLS0tXG4gICAgICAgKipEZWxldGlvbkNOVioqICAgICAgICAgICAwICAgICAxICAgICAgICAgMCAgICAgICAgICAgIDAgICAgICAyICBcblxuICAgICAqKkR1cGxpY2F0aW9uQ05WKiogICAgICAgICAgMCAgICAgMyAgICAgICAgIDAgICAgICAgICAgICAyICAgICAgMCAgXG5cbiAgICAgICAqKkZyYW1lc2hpZnQqKiAgICAgICAgICAgIDAgICAgIDAgICAgICAgICAwICAgICAgICAgICAgNyAgICAgIDE0IFxuXG4gICAgICAgICoqTWlzc2Vuc2UqKiAgICAgICAgICAgICAwICAgICAzMyAgICAgICAgMCAgICAgICAgICAgMTQyICAgICA0OCBcblxuICAgICAgICAqKk5vbnNlbnNlKiogICAgICAgICAgICAgMSAgICAgMCAgICAgICAgIDAgICAgICAgICAgICA3ICAgICAgMTEgXG5cbiAgICAgICAgICAqKk90aGVyKiogICAgICAgICAgICAgIDAgICAgIDAgICAgICAgICAwICAgICAgICAgICAgMyAgICAgIDAgIFxuXG4gKipQb3B1bGF0aW9uVmFyaWFudEluRXhBQyoqICAgICAwICAgICAwICAgICAgICAgMSAgICAgICAgICAgIDQgICAgICAxICBcblxuICAgICAgICoqU3BsaWNlU2l0ZSoqICAgICAgICAgICAgMCAgICAgMCAgICAgICAgIDAgICAgICAgICAgICAzICAgICAgMTAgXG4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1cbiJ9 -->
-<pre><code>
-------------------------------------------------------------------------
-           &amp;nbsp;              Maybe   N    Probably not   Unknown   Y  
------------------------------ ------- ---- -------------- --------- ----
-       **DeletionCNV**           0     1         0            0      2  
-
-     **DuplicationCNV**          0     3         0            2      0  
-
-       **Frameshift**            0     0         0            7      14 
-
-        **Missense**             0     33        0           142     48 
-
-        **Nonsense**             1     0         0            7      11 
-
-          **Other**              0     0         0            3      0  
-
- **PopulationVariantInExAC**     0     0         1            4      1  
-
-       **SpliceSite**            0     0         0            3      10 
-------------------------------------------------------------------------</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2Fuc3dlcjogQVNEKE1heWJlKT0gMSBncm91cCAmIEFTRChZKT0gNiwgbm9uLUFTRChQcm9iYWJseSBub3QpID0gMSBncm91cCwgbm9uLUFTRChOKSA9IDMgZ3JvdXBzXG5gYGAifQ== -->
-<pre class="r"><code>#answer: ASD(Maybe)= 1 group &amp; ASD(Y)= 6, non-ASD(Probably not) = 1 group, non-ASD(N) = 3 groups</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTgsIm5jb2wiOjMsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGYgWzE4IHggM10iXX19LCJyZGYiOiJINHNJQUFBQUFBQUFCbjFTVVUvQ01CRHU2QVk2bFJCOThGVi9nTVNvTHp3U3dNUUhrVWdrK0ZoR0p3dTF4YTRUZlBNWCtKUFZkcnN6WTFHWFhIcjM5ZHZkZlhlOTcwOHZ3MmxJQ0tIRTl6eENBK3VTb0RmcVhIVUk4V3MyOEloUGR0MjVzYVNqbkVub2dUMFBIVE1uRU9LSXZyVUcrQlJpZDE4SGZBZTQ1VHZBdHdyVkJYL2xJclZlSzc4dDBMMCtGOXdrU3ZhR0U0Q2EvV3dsa29odG8rRzFaczg4WFNTeEFXVG5Oa2xUTGxPTzhWREpjaHpjbVFYWEVCeVAxQ29UZWM0SjB3bVQ1a1lPTnQwZVpoKzdrbnljR0Y1cE80Z0VTN0hySHkweGk0elMxdnNzVFEwbmhvWVQrY3VDMzgyVnIzMUJ4UURidUdWdk0xVG1EY0haSDJrMVl6UHhkaUlWanFYeElKZFNyU1Z5SDR1TTlPcy9EYVNzQWJkNVd0TGtOdm9CSitxaWNOZTBkdTUyQ2Z5d09rTHBOZ2ZsS1pZZnhER1BzR25hSGZmQjlhODFmNmxrMk5WcTNjWXNydFhhTzhtL3d6L0VoWE5tV0R0MlQ2WVF1Sld1b1ZidUlkaGt0U09ZZS9sblQxZUFWaVpkOGZsWnRNams4dXlpVTRqTXhSTG95SU1Cb2srTG1uNTFrWFV1bnhMNTgwWUZtM0dCRDkrcXpFVzJWenFST0pyUW9tbmJLTU9RRjBaS0lGSnM3L01ibXphNlpQRURBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Effect"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["ASD"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["Freq"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Nonsense","2":"Maybe","3":"1"},{"1":"DeletionCNV","2":"N","3":"1"},{"1":"DuplicationCNV","2":"N","3":"3"},{"1":"Missense","2":"N","3":"33"},{"1":"PopulationVariantInExAC","2":"Probably not","3":"1"},{"1":"DuplicationCNV","2":"Unknown","3":"2"},{"1":"Frameshift","2":"Unknown","3":"7"},{"1":"Missense","2":"Unknown","3":"142"},{"1":"Nonsense","2":"Unknown","3":"7"},{"1":"Other","2":"Unknown","3":"3"},{"1":"PopulationVariantInExAC","2":"Unknown","3":"4"},{"1":"SpliceSite","2":"Unknown","3":"3"},{"1":"DeletionCNV","2":"Y","3":"2"},{"1":"Frameshift","2":"Y","3":"14"},{"1":"Missense","2":"Y","3":"48"},{"1":"Nonsense","2":"Y","3":"11"},{"1":"PopulationVariantInExAC","2":"Y","3":"1"},{"1":"SpliceSite","2":"Y","3":"10"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[18]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIjE1L1NlcF9RdWl6Ig0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KYGBge3J9DQojcXVpejogQVNEIHZzLiBub24tQVNEOiBob3cgbWFueSBlZmZlY3QgZ3JvdXBzPyAodGlkeXZlcnNlKQ0KDQppbnN0YWxsLnBhY2thZ2VzKCdyaW8nKQ0KZCA9IHJpbzo6aW1wb3J0KCdodHRwczovL3d3dy5uY2JpLm5sbS5uaWguZ292L3BtYy9hcnRpY2xlcy9QTUM2MDE1NTMzL2Jpbi9OSUhNUzk1NzU5Mi1zdXBwbGVtZW50LTEueGxzeCcpDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCg0KI0ZpcnN0LCBsZXQncyBjcmVhdGUgYSBmdW5jdGlvbiB0aGF0IGNvdW50cyBob3cgbWFueSBlZmZlY3QgZ3JvdXBzIGFyZSB0aGVyZSBpbiBlYWNoIG9mIEFTRCBjYXRlZ29yaWVzOiBZLCBNYXliZSwgTiwgUHJvYmFibHkgbm90LiBUaGVuLCBsZXQncyBsb29wIGl0Lg0KDQp4PC0gYygiWSIsIk1heWJlIiwgIk4iLCJQcm9iYWJseSBub3QiKSANCnNhcHBseSh4LGZ1bmN0aW9uKHgpe2RhdGEuZnJhbWUoZCAlPiUgc2VsZWN0KEVmZmVjdCwgQVNEKSAlPiUgdGFibGUoKSkgJT4lIGZpbHRlcihBU0QgPT0geCAmIEZyZXEgIT0gMCkgJT4lIG5yb3coKX0pDQoNCiNVbmZvcnR1bmF0ZWx5LCBJIGZhaWxlZCB0byB3cml0ZSBhIGNvZGUgdGhhdCBmaWd1cmVzIG91dCB3aGV0aGVyIHRoZSBlZmZlY3QgZ3JvdXBzICpvdmVybGFwKiBiZXR3ZWVuIEFTRCBjYXRlZ29yaWVzLg0KI1doYXQgSSBtZWFuIGlzIHRoYXQgYm90aCAiWSIgYW5kICJNYXliZSIgaGF2ZSAnTm9uc2Vuc2UnIGVmZmVjdCBjYXRlZ29yeS4uIFNvIEkgY2Fubm90IHNpbXBseSBhZGQgKDYrMT03KSBhbmQgc2F5LCBBU0QgcGF0aWVudHMoWSZNYXliZSkgaGF2ZSA3IGVmZmVjdCBncm91cHMuDQoNCiNBbnl3YXlzLCBsZXQncyBtYWtlIGEgdGFibGUgdG8gZG91YmxlIGNoZWNrIGlmIEkndmUgY291bnRlZCB3ZWxsLg0KDQpsaWJyYXJ5KHBhbmRlcikNCmQgJT4lIHNlbGVjdChFZmZlY3QsIEFTRCkgJT4lIHRhYmxlKCkgJT4lIHBhbmRlcigpIA0KDQojYW5zd2VyOiBBU0QoTWF5YmUpPSAxIGdyb3VwICYgQVNEKFkpPSA2LCBub24tQVNEKFByb2JhYmx5IG5vdCkgPSAxIGdyb3VwLCBub24tQVNEKE4pID0gMyBncm91cHMNCmBgYA==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIjE1L1NlcF9RdWl6Ig0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KYGBge3J9DQojcXVpejogQVNEIHZzLiBub24tQVNEOiBob3cgbWFueSBlZmZlY3QgZ3JvdXBzPyAodGlkeXZlcnNlKQ0KDQppbnN0YWxsLnBhY2thZ2VzKCdyaW8nKQ0KZCA9IHJpbzo6aW1wb3J0KCdodHRwczovL3d3dy5uY2JpLm5sbS5uaWguZ292L3BtYy9hcnRpY2xlcy9QTUM2MDE1NTMzL2Jpbi9OSUhNUzk1NzU5Mi1zdXBwbGVtZW50LTEueGxzeCcpDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCg0KI0ZpcnN0LCBsZXQncyBjcmVhdGUgYSBmdW5jdGlvbiB0aGF0IGNvdW50cyBob3cgbWFueSBlZmZlY3QgZ3JvdXBzIGFyZSB0aGVyZSBpbiBlYWNoIG9mIEFTRCBjYXRlZ29yaWVzOiBZLCBNYXliZSwgTiwgUHJvYmFibHkgbm90LiBUaGVuLCBsZXQncyBsb29wIGl0Lg0KDQp4PC0gYygiWSIsIk1heWJlIiwgIk4iLCJQcm9iYWJseSBub3QiKSANCnNhcHBseSh4LGZ1bmN0aW9uKHgpe2RhdGEuZnJhbWUoZCAlPiUgc2VsZWN0KEVmZmVjdCwgQVNEKSAlPiUgdGFibGUoKSkgJT4lIGZpbHRlcihBU0QgPT0geCAmIEZyZXEgIT0gMCkgJT4lIG5yb3coKX0pDQoNCiNVbmZvcnR1bmF0ZWx5LCBJIGZhaWxlZCB0byB3cml0ZSBhIGNvZGUgdGhhdCBmaWd1cmVzIG91dCB3aGV0aGVyIHRoZSBlZmZlY3QgZ3JvdXBzICpvdmVybGFwKiBiZXR3ZWVuIEFTRCBjYXRlZ29yaWVzLg0KI1doYXQgSSBtZWFuIGlzIHRoYXQgYm90aCAiWSIgYW5kICJNYXliZSIgaGF2ZSAnTm9uc2Vuc2UnIGVmZmVjdCBjYXRlZ29yeS4uIFNvIEkgY2Fubm90IHNpbXBseSBhZGQgKDYrMT03KSBhbmQgc2F5LCBBU0QgcGF0aWVudHMoWSZNYXliZSkgaGF2ZSA3IGVmZmVjdCBncm91cHMuDQoNCiNBbnl3YXlzLCBsZXQncyBtYWtlIGEgdGFibGUgdG8gZG91YmxlIGNoZWNrIGlmIEkndmUgY291bnRlZCB3ZWxsLg0KDQpsaWJyYXJ5KHBhbmRlcikNCmQgJT4lIHNlbGVjdChFZmZlY3QsIEFTRCkgJT4lIHRhYmxlKCkgJT4lIHBhbmRlcigpIA0KDQojYW5zd2VyOiBBU0QoTWF5YmUpPSAxIGdyb3VwICYgQVNEKFkpPSA2LCBub24tQVNEKFByb2JhYmx5IG5vdCkgPSAxIGdyb3VwLCBub24tQVNEKE4pID0gMyBncm91cHMNCmBgYA0KDQpgYGB7cn0NCmluc3RhbGwucGFja2FnZXMoJ3JpbycpDQpkID0gcmlvOjppbXBvcnQoJ2h0dHBzOi8vd3d3Lm5jYmkubmxtLm5paC5nb3YvcG1jL2FydGljbGVzL1BNQzYwMTU1MzMvYmluL05JSE1TOTU3NTkyLXN1cHBsZW1lbnQtMS54bHN4JykNCmxpYnJhcnkodGlkeXZlcnNlKQ0KDQojQU5TV0VSIDogDQpkICU+JSBncm91cF9ieShBU0QsIEVmZmVjdCkgJT4lIGNvdW50KCkNCg0KI015IG1vZGlmaWVkIGFuc3dlciA6IChwbHogZG8gbm90IG1pc3VuZGVyc3RhbmQgdGhlIHF1ZXN0aW9uLi4uT1RMKQ0KZGF0YS5mcmFtZShkICU+JSBzZWxlY3QoRWZmZWN0LCBBU0QpICU+JSB0YWJsZSgpKSAlPiUgZmlsdGVyKEZyZXEgIT0gMCkNCmBgYA0KDQo=</div>
 
 
 

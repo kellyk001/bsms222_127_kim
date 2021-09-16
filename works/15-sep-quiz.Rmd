@@ -25,3 +25,16 @@ d %>% select(Effect, ASD) %>% table() %>% pander()
 
 #answer: ASD(Maybe)= 1 group & ASD(Y)= 6, non-ASD(Probably not) = 1 group, non-ASD(N) = 3 groups
 ```
+
+```{r}
+install.packages('rio')
+d = rio::import('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6015533/bin/NIHMS957592-supplement-1.xlsx')
+library(tidyverse)
+
+#ANSWER : 
+d %>% group_by(ASD, Effect) %>% count()
+
+#My modified answer : (plz do not misunderstand the question...OTL)
+data.frame(d %>% select(Effect, ASD) %>% table()) %>% filter(Freq != 0)
+```
+
