@@ -23,7 +23,7 @@ library(tidyverse)
 library(dslabs)
 library(pander)
 data(gapminder)
-gapminder %>% as_tibble()
+gapminder %>% as_tibble() %>% head()
 #> # A tibble: 10,545 x 9
 #>   country     year infant_mortality life_expectancy fertility population
 #>   <fct>      <int>            <dbl>           <dbl>     <dbl>      <dbl>
