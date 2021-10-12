@@ -15,10 +15,7 @@ To answer this question, we need to access the database for gene annotation. Gen
 
 One of well-known collaborative efforts in gene annotation is the GENCODE consortium. It is a part of the Encyclopedia of DNA Elements (The ENCODE project consortium) and aims to identify all gene features in the human genome using a combination of computational analysis, manual annotation, and experimental validation (Harrow et al. 2012). You might find another database for gene annotation, like RefSeq, CCDS, and need to understand differences between them.
 
-```{r echo=FALSE, out.width = '100%'}
-knitr::include_graphics(rep("C:/Users/MinSeo Kim/Documents/R/tutorial2-pic1"))
-```
-
+(pic)
 **Figure 1. Comparison of GENCODE and RefSeq gene annotation and the impact of reference geneset on variant effect prediction (Frankish et al. 2015).** A) Mean number of alternatively spliced transcripts per multi-exon protein-coding locus B) Mean number of unique CDS per multi-exon protein-coding locus C) Mean number of unique (non-redundant) exons per multi-exon protein-coding locus D) Percentage genomic coverage of unique (non-redundant) exons at multi-exon protein-coding loci.
 
 In this tutorial, we will access to gene annotation from the GENCODE consortium and explore genes and functional elements in our genome.
@@ -267,7 +264,7 @@ d3$gene_id <- as.character(do.call(rbind.data.frame,
 
 #No. of transcripts per gene
 
-d3 %>% group_by(gene_id) %>% count() %>% pander()
+d3 %>% group_by(gene_id) %>% count() %>% head()
 
 #Mean
 
@@ -492,16 +489,16 @@ d6 %>% group_by(chrom) %>% count() %>% pander()
 d7 <- d6 %>% subset(chrom!="chrM")
 
 #Median of autosomal chromosomes
-d7 %>% group_by(chrom) %>% filter(chrom != "chrX", chrom != "chrY") %>% count() %>% pull(n) %>% median()
+d7 %>% group_by(chrom) %>% filter(!chrom %in% c("chrX", "chrY")) %>% count() %>% pull(n) %>% median()
 
 #Mean
-d7 %>% group_by(chrom) %>% filter(chrom != "chrX", chrom != "chrY") %>% count() %>% pull(n) %>% mean()
+d7 %>% group_by(chrom) %>% filter(!chrom %in% c("chrX", "chrY")) %>% count() %>% pull(n) %>% mean()
 
 #Median of sex chromosomes
-d7 %>% group_by(chrom) %>% filter(chrom == c("chrX", "chrY")) %>% count() %>% pull(n) %>% median()
+d7 %>% group_by(chrom) %>% filter(chrom %in% c("chrX", "chrY")) %>% count() %>% pull(n) %>% median()
 
 #Mean
-d7 %>% group_by(chrom) %>% filter(chrom == c("chrX", "chrY")) %>% count() %>% pull(n) %>% mean()
+d7 %>% group_by(chrom) %>% filter(chrom %in% c("chrX", "chrY")) %>% count() %>% pull(n) %>% mean()
 ```
 
 3. Please divide the genes into groups ‘protein coding’ and ‘long noncoding’, and then compare the number of genes in each chromosomes within groups.
