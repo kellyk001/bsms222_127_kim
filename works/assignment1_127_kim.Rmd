@@ -1,0 +1,677 @@
+---
+title: "assignment1_127_kim"
+output:
+  html_document:
+    df_print: paged
+---
+# Investigating the difference between Taiwan cohort(Chen et al., 2020) and CPTAC cohort(Gillette et al., 2020) patients' gene expression on transcriptome and proteome level.
+ 
+ 
+## 1. Introduction
+
+Chen's research was based on Taiwanese LUAD patients' samples, and the cohort showed its unique patterns, including high proportion of never-smokers, female, early stage LUAD, and many more. Comparing to western region biased TCGA cohort, the research indicated the unique trends shown from each cohorts. 
+
+Here, I am going to investigate the different trends of gene expression between Taiwan cohort and another cohort, on transcriptome and proteome level. To compare with Taiwan cohort(Chen et al., 2020), I selected the most recent and multi-national LUAD research(Gillette et al., 2020) in NCI(National Cancer Institute) portal which used CPTAC(Clinical Proteomic Tumor Analysis Consortium) project data. 
+
+Since the CPTAC cohort data includes multi-national patients, it can show the global trend of gene expressions, and therefore comparing it with Taiwan cohort can show Taiwanese-specific characteristics to overall worldwide trend.
+
+I will examine if four of the unique characteristics of Taiwan cohort mentioned in Chen's research - high proportion of never-smokers, EGFR mutations, females, early stage patients - are also found in CPTAC cohort. Also, I will compare gene expressions between two cohorts and investigate if RNA/protein expression are effected by somatic mutations of some important cancer related genes - TP53, KRAS, STK11, EGFR, RB1, KEAP1, BRAF - that are addressed in Gillette's research.
+
+
+## 2. Preparing the data
+
+Let's load the data from both of the researches and cut out any unnecessary entries from the dataframes. Also, from now on, 'TW' refers to the Taiwan cohort research(Chen et al., 2020), and 'CPTAC' refers to the CPTAC cohort research(Gillette et al., 2020).
+
+### 2.1. Load the data
+```{r}
+#Load the packages and data
+library(readxl)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(janitor)
+library(magrittr)
+library(cowplot)
+
+#Load Taiwan cohort's clinical data(patient_info), RNA expression data(RNA), and protein expression data(Protein).
+d_TW_patient_info_0 = read_excel('./TW-mmc1.xlsx', sheet=2, na="NA")
+d_TW_RNA_0 = read_excel('./TW-mmc1.xlsx', sheet=5, na="NA")
+d_TW_Protein_0 = read_excel('./TW-mmc1.xlsx', sheet=6, na="NA")
+
+#Load the data for CPTAC cohort.
+d_CPTAC_patient_info_0 = read_excel('./CPTAC-mmc1.xlsx', sheet=2, na="NA")
+d_CPTAC_RNA_0 = read_excel('./CPTAC-mmc2.xlsx', sheet=6, na="NA", skip = 2)
+d_CPTAC_Protein_0 = read_excel('./CPTAC-mmc3.xlsx', sheet=2, na="NA", skip = 2)
+
+```
+
+### 2.2. Cut out and merge the data
+
+We will cut out redundant information and merge the necessary information to prepare the data for visualization. Here, we use the 25 'cancer related genes' from the Cancer Gene Census (COSMIC) portal, which addressed in Chen's research(Table S1J and Figure 1A) and 7 cancer related genes addressed in Gillette's research.
+```{r}
+#Load the gene list from table S1J in TW research.
+d_25_gene_list = read_excel('./TW-mmc1.xlsx', sheet=11, na="NA")
+
+#These are 25 cancer related genes, selected by COSMIC. 
+gene_list_1 <- d_25_gene_list %>% 
+  select(Hugo_Symbol) %>% 
+  pull()
+
+#Include 6 genes, selected in Gillette's research
+gene_list <- c("STK11", "KEAP1", "BRAF", gene_list_1)
+
+#Load mutation data for TW cohort, and filter 7 genes
+d_7_gene_mut = read_excel('./TW-mmc1.xlsx', sheet=4, na="NA", skip = 1)
+d_7_gene_mut_1 <- d_7_gene_mut %>% 
+  select(-c(2:3)) %>% 
+  filter(Gene %in% c("TP53", "KRAS", "STK11", "KEAP1", "BRAF", "RB1", "EGFR")) %>%
+  t() %>%
+  row_to_names(row_number = 1) %>%
+  as.data.frame() %>%
+  mutate(TP53.mutation.status = ifelse(is.na(TP53), "0", "1")) %>%
+  mutate(KRAS.mutation.status = ifelse(is.na(KRAS), "0", "1")) %>%
+  mutate(STK11.mutation.status = ifelse(is.na(STK11), "0", "1")) %>%
+  mutate(RB1.mutation.status = ifelse(is.na(RB1), "0", "1")) %>%
+  mutate(BRAF.mutation.status = ifelse(is.na(BRAF), "0", "1")) %>%
+  mutate(KEAP1.mutation.status = ifelse(is.na(KEAP1), "0", "1")) %>%
+  mutate(EGFR.mutation.status = ifelse(is.na(EGFR), "0", "1")) %>%
+  rename(TP53.mutation = TP53) %>%
+  rename(KRAS.mutation = KRAS) %>%
+  rename(STK11.mutation = STK11) %>%
+  rename(RB1.mutation = RB1) %>%
+  rename(BRAF.mutation = BRAF) %>%
+  rename(KEAP1.mutation = KEAP1) %>%
+  rename(EGFR.mutation = EGFR)
+
+"7_gene_list" <- c("TP53", "KRAS", "STK11", "KEAP1", "BRAF", "RB1", "EGFR")
+
+```
+
+#### 1) TW data
+
+First, we will only select 25 cancer related genes from RNA, protein data frame. 
+Next, we will merge the patient information(gender, age, smoking status, cancer stage, EGFR status) to RNA and protein expression data. We also flip the rows and columns around, so each rows will indicate patients, and the newly added information will become new columns.
+```{r}
+d_TW_patient_info <- d_TW_patient_info_0 %>%
+  select(-c(Proteome_Batch, `Histology Type`, `Primary Tumor Location`, EGFR_Status))
+
+# RNA data
+d_TW_RNA <- d_TW_RNA_0 %>% 
+  filter(gene %in% gene_list) %>% 
+  select(-c(ensembl_gene_id, Median)) %>%
+  remove_rownames() %>%
+  column_to_rownames(var = 'gene') %>%
+  t() %>%
+  merge(d_TW_patient_info, by.x = 0, by.y = "ID") %>% #Merge data
+  merge(d_7_gene_mut_1, by.x = "Row.names", by.y = 0) %>%
+  rename(ID = Row.names) %>%
+  mutate(Country.of.Origin = "Taiwan")
+  
+# Protein data
+d_TW_Protein <- d_TW_Protein_0 %>% 
+  filter(Gene %in% gene_list) %>% 
+  select(-c(Accession, Protein)) %>%
+  remove_rownames() %>%
+  column_to_rownames(var = 'Gene') %>%
+  t() %>%
+  merge(d_TW_patient_info, by.x = 0, by.y = "ID") %>% #Merge data
+  merge(d_7_gene_mut_1, by.x = "Row.names", by.y = 0) %>%
+  rename(ID = Row.names) %>%
+  mutate(Country.of.Origin = "Taiwan")
+
+#Note: 3 genes are missing in protein data, and we can check them by the code below.
+setdiff(gene_list, d_TW_Protein_0 %>%
+          filter(Gene %in% gene_list) %>% 
+          select(Gene) %>% 
+          pull())
+
+```
+
+#### 2) CPTAC data
+
+First, we will cut out redundant information in CPTAC data frames, and only leave patient ID, smoking status, country of origin, age, gender, EGFR mutation status, and gene abundance information for the 25 genes. Also, in CPTAC data, it *is* normalized and log2-transformed, but the tumor and NAT sample data is split. Therefore, we have to calculate the log2T/N manually.
+
+(1) RNA data
+```{r}
+#Subsetting data for 28 genes, and flip rows and columns around.
+d_CPTAC_RNA <- d_CPTAC_RNA_0 %>%
+  filter(geneSymbol %in% gene_list | id...1 == "Type") %>%
+  select(-c(id...1, gene_id, gene_type, length, id...6)) %>%
+  remove_rownames() %>%
+  column_to_rownames(var = 'geneSymbol') %>%
+  t() %>%
+  as.data.frame()
+
+#Reorder the row names numerically, but first remove the characters.
+row.names(d_CPTAC_RNA) <- row.names(d_CPTAC_RNA) %<>% 
+  gsub("C3L.", "",.) %>%
+  gsub("C3N.", "",.)
+
+#Simply subtract NAT from Tumor to get log2T/N(Values are already log2-transformed). First divide into Tumor and NAT data frames, and arrange rows numerically.
+d1 <- d_CPTAC_RNA %>% 
+  filter(na == "Tumor") %>% 
+  select(-na)
+
+d1$index <- as.numeric(row.names(d1))
+d1 <- d1[order(d1$index), ]
+
+d2 <- d_CPTAC_RNA %>% 
+  filter(na == "NAT") %>% 
+  select(-na)
+
+row.names(d2) <- gsub("\\.N", "", row.names(d2)) #Remove the character ".N"
+d2$index <- as.numeric(row.names(d2))
+d2 <- d2[order(d2$index), ] %>% 
+  select(-index)
+
+#Delete 9 rows that do not overlap in d1(110 rows) and d2(101 rows)
+d1 <- d1 %>% 
+  subset(rownames(d1) %in% intersect(row.names(d1), row.names(d2))) %>% 
+  select(-index)
+
+#Subtract 2 data frames to get log2T/N values, but first convert all the non-numeric values into numeric.
+d1[] <- lapply(d1, function(x) as.numeric(as.character(x)))
+d2[] <- lapply(d2, function(x) as.numeric(as.character(x)))
+d_CPTAC_RNA <- d1-d2
+
+#Merge patient_info.
+d_CPTAC_patient_info_0 %<>% 
+  filter(Type == "Tumor") %>% 
+  select(Sample.ID, Smoking.Status, Stage, Country.of.Origin, Age, Gender, c(46:52), c(37:43))
+
+d_CPTAC_patient_info_0$Sample.ID %<>% 
+  gsub("C3L.", "", .) %>% 
+  gsub("C3N.", "", .)
+
+d_CPTAC_RNA <- merge(x = d_CPTAC_RNA, y = d_CPTAC_patient_info_0, by.x = 0, by.y = "Sample.ID")
+
+#Mutation status columns should be 'character' vectors.
+
+d_CPTAC_RNA$TP53.mutation.status %<>% as.character()
+d_CPTAC_RNA$EGFR.mutation.status %<>% as.character()
+d_CPTAC_RNA$STK11.mutation.status %<>% as.character()
+d_CPTAC_RNA$RB1.mutation.status %<>% as.character()
+d_CPTAC_RNA$BRAF.mutation.status %<>% as.character()
+d_CPTAC_RNA$KRAS.mutation.status %<>% as.character()
+d_CPTAC_RNA$KEAP1.mutation.status %<>% as.character()
+
+```
+
+(2) Protein data
+
+Repeat the process for protein data.
+```{r}
+d_CPTAC_Protein <- d_CPTAC_Protein_0 %>%
+  filter(GeneSymbol %in% gene_list | id...1 == "Type") %>%
+  select(-c(1:15), -c(id...17)) %>% #16th and 17th values in GeneSymbol column are identical(both are SLC34A2), because they make two different isoforms(a, b). Let's label them.
+  mutate(GeneSymbol = replace(GeneSymbol, C3L.00263 == -3.7624, 'SLC34A2-a'), GeneSymbol = replace(GeneSymbol, C3L.01890.N == 1.1266, 'SLC34A2-b')) %>% 
+  remove_rownames() %>%
+  column_to_rownames(var = 'GeneSymbol') %>%
+  t() %>% 
+  as.data.frame()
+
+#Divide into Tumor and NAT data frames, and remove the character ".N".
+
+d3 <- d_CPTAC_Protein %>% 
+  filter(na == "Tumor") %>% 
+  select(-na)
+
+d4 <- d_CPTAC_Protein %>% 
+  filter(na == "NAT") %>% 
+  select(-na)
+
+#Delete 9 rows that do not overlap in d1(110 rows) and d2(101 rows).
+
+row.names(d4) <- gsub("\\.N", "", row.names(d4)) 
+
+d3 <- d3 %>% 
+  subset(rownames(d3) %in% intersect(row.names(d3), row.names(d4)))
+
+#Subtract to get log2T/N values.
+d3[] <- lapply(d3, function(x) as.numeric(as.character(x)))
+d4[] <- lapply(d4, function(x) as.numeric(as.character(x)))
+d_CPTAC_Protein <- d3 - d4
+
+
+#Merge with patient_info.
+row.names(d_CPTAC_Protein) <- row.names(d_CPTAC_Protein) %<>% 
+  gsub("C3L.", "",.) %>%
+  gsub("C3N.", "",.)
+
+d_CPTAC_Protein <- merge(x = d_CPTAC_Protein, y = d_CPTAC_patient_info_0, by.x = 0, by.y = "Sample.ID")
+
+#Mutation status columns should be 'character' vectors.
+
+d_CPTAC_Protein$TP53.mutation.status %<>% as.character()
+d_CPTAC_Protein$EGFR.mutation.status %<>% as.character()
+d_CPTAC_Protein$STK11.mutation.status %<>% as.character()
+d_CPTAC_Protein$RB1.mutation.status %<>% as.character()
+d_CPTAC_Protein$BRAF.mutation.status %<>% as.character()
+d_CPTAC_Protein$KRAS.mutation.status %<>% as.character()
+d_CPTAC_Protein$KEAP1.mutation.status %<>% as.character()
+
+```
+
+
+## 3. Visualization
+
+### 3.1. Make tidier
+
+25 genes are all in the columns and it's too long. Make it tidier for visualization by pivoting. Label tidy data as '_T'.
+```{r}
+#Make gene list of protein data (3 genes missing) for pivoting.
+gene_list_p_TW <- intersect(gene_list,  d_TW_Protein_0 %>%
+                                 filter(Gene %in% gene_list) %>% 
+                                 select(Gene) %>% 
+                                 pull())
+
+#Make gene list of protein data for pivoting.
+gene_list_p_CPTAC <- d_CPTAC_Protein %>% select(-c(Row.names, 24:42)) %>% colnames()
+
+#Make tidier.
+d_TW_RNA_T <- d_TW_RNA %>% 
+  pivot_longer(gene_list, names_to = "Gene", values_to = "Log2TN") %>% 
+  rename(Smoking.Status = `Smoking Status`)
+
+d_TW_Protein_T <- d_TW_Protein %>% 
+  pivot_longer(gene_list_p_TW, names_to = "Gene", values_to = "Log2TN") %>% 
+  rename(Smoking.Status = `Smoking Status`)
+
+d_CPTAC_RNA_T <- d_CPTAC_RNA %>% 
+  pivot_longer(gene_list, names_to = "Gene", values_to = "Log2TN") %>%
+  rename(ID = Row.names)
+
+d_CPTAC_Protein_T <- d_CPTAC_Protein %>% 
+  pivot_longer(gene_list_p_CPTAC, names_to = "Gene", values_to = "Log2TN") %>%
+  rename(ID = Row.names)
+
+#Bind them together for easy handling. Add a column to distinguish them.
+d_RNA <- bind_rows(d_TW_RNA_T, d_CPTAC_RNA_T)
+
+d_RNA %<>% mutate(Cohort = ifelse(Country.of.Origin == "Taiwan", "Taiwan", "Multi-nation"))
+
+d_Protein <- bind_rows(d_TW_Protein_T, d_CPTAC_Protein_T)
+
+d_Protein %<>% mutate(Cohort = ifelse(Country.of.Origin == "Taiwan", "Taiwan", "Multi-nation"))
+
+#Modify some column(gender, smoking status, stage) values into same formats. Ex) Gender = Female, Male, female, male --> female, male)
+
+d_RNA$Gender %<>% 
+  gsub("Female", "female", .) %>% 
+  gsub("Male", "male", .)
+
+d_RNA$Smoking.Status %<>% 
+  gsub("non-smoker", "Nonsmoke", .) %>% 
+  gsub("smoker", "Current_Smoker", .) %>%
+  gsub("Ex-Current_Smoker", "Ex_Smoker", .)
+
+d_RNA$Stage %<>% 
+  gsub("IIIA", "3A", .) %>% 
+  gsub("IIA", "2A", .) %>% 
+  gsub("IA", "1A", .) %>% 
+  gsub("IIIB", "3B", .) %>% 
+  gsub("IIB", "2B", .) %>% 
+  gsub("IB", "1B", .) %>% 
+  gsub("IV", "4", .)
+
+
+d_Protein$Gender %<>% 
+  gsub("Female", "female", .) %>% 
+  gsub("Male", "male", .)
+
+d_Protein$Smoking.Status %<>% 
+  gsub("non-smoker", "Non_smoke", .) %>% 
+  gsub("smoker", "Current_Smoker", .) %>%
+  gsub("Ex-Current_Smoker", "Ex_Smoker", .)
+
+
+d_Protein$Stage %<>% 
+  gsub("IIIA", "3A", .) %>% 
+  gsub("IIA", "2A", .) %>% 
+  gsub("IA", "1A", .) %>% 
+  gsub("IIIB", "3B", .) %>% 
+  gsub("IIB", "2B", .) %>% 
+  gsub("IB", "1B", .) %>% 
+  gsub("IV", "4", .)
+
+#Let's add a column for 'region of origin' for later use.
+
+d_RNA %<>% 
+  mutate(Region.of.Origin = ifelse(Country.of.Origin %in% c("Taiwan", "China", "Vietnam"), "Asian", "Western"))
+
+d_Protein %<>% 
+  mutate(Region.of.Origin = ifelse(Country.of.Origin %in% c("Taiwan", "China", "Vietnam"), "Asian", "Western"))
+
+```
+
+```{r}
+#My tidy data
+
+head(d_RNA)
+
+head(d_Protein)
+```
+
+
+### 3.2. Plots
+
+For the investigation, I've prepared some questions.
+
+Q1. Do other countries on multi-national cohort also show Taiwanese-specific characteristics? (high percentage of never-smokers, EGFR mutations, female, early stage)
+Q2. Compare gene expressions by cohorts. Are gene expression differences related to TW cohort-specific characteristics?
+Q3. Compare gene expressions of 'the 7 cancer related genes'(TP53, KRAS, STK11, EGFR, RB1, KEAP1, BRAF). If genes are over-/under-expressed, is it because of the mutations on certain cancer related genes?
+Q4. Can we find correlations between the 7 genes' over-/under-expressions and patient's properties(gender, smoking status, LUAD stage, country of origin)?
+
+
+```{r}
+library(ggridges)
+library(ggtext)
+library(RColorBrewer)
+library(ggrepel)
+library(data.table)
+
+#Bar plots : Q1
+
+A1 <- d_RNA %>%
+  ggplot(aes(Gender, fill = Cohort)) + 
+  geom_bar() +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5)) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        text = element_text(size = 14)) + 
+  theme(legend.position="none")
+
+B1 <- d_RNA %>%
+ ggplot(aes(Smoking.Status, fill = Cohort)) + 
+  geom_bar() +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5)) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        text = element_text(size = 14)) + 
+  theme(legend.position="none")
+
+C1 <- d_RNA %>%
+  ggplot(aes(Stage, fill = Cohort)) + 
+  geom_bar() +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5)) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        text = element_text(size = 14)) + 
+  theme(legend.position="none")
+
+D1 <- d_RNA %>%
+  ggplot(aes(EGFR.mutation.status, fill = Cohort)) + 
+  geom_bar() +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5)) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        text = element_text(size = 14))
+
+E1 <- d_RNA %>%
+  ggplot(aes(Gender, fill = Country.of.Origin)) + 
+  geom_bar() +
+  geom_text_repel(aes(label=..count..),stat="count",position=position_stack(0.5)) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        text = element_text(size = 14)) + 
+  theme(legend.position="none")
+
+F1 <- d_RNA %>% 
+  ggplot(aes(Smoking.Status, fill = Country.of.Origin)) + 
+  geom_bar() +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5), size = 3, force = 0.2) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        text = element_text(size = 14)) + 
+  theme(legend.position="none")
+
+G1 <- d_RNA %>% 
+  ggplot(aes(Stage, fill = Country.of.Origin)) + 
+  geom_bar() +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5), size = 3.2) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        text = element_text(size = 14)) + 
+  theme(legend.position="none")
+
+H1 <- d_RNA %>%
+  ggplot(aes(EGFR.mutation.status, fill = Country.of.Origin)) + 
+  geom_bar() +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5)) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        text = element_text(size = 14))
+```
+
+
+```{r}
+#Density ridge plots : Q2
+
+A2 <- d_RNA %>%
+  filter(Gene %in% `7_gene_list`) %>%
+  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+  ggplot(aes(Log2TN, Gene, fill = Cohort)) +  
+  geom_density_ridges(alpha = 0.3) +
+  xlim(-3, 3) +
+  geom_vline(aes(xintercept = 0)) + 
+  theme(legend.position="none") +
+  labs(subtitle="RNA expression") +
+  theme(plot.subtitle=element_text(size=30),
+        text = element_text(size = 14))
+
+B2 <- d_Protein %>% 
+  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+  ggplot(aes(Log2TN, Gene, fill = Cohort)) +  
+  geom_density_ridges(alpha = 0.3) +
+  xlim(-3, 3) +
+  geom_vline(aes(xintercept = 0)) +
+  labs(subtitle="Protein expression") +
+  theme(plot.subtitle=element_text(size=30),
+        text = element_text(size = 14)) #There must be something wrong in CPTAC data..
+
+C2 <- d_RNA %>%
+  filter(!is.na(Gender)) %>%
+  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+  ggplot(aes(Log2TN, Gene, fill = Cohort)) +  
+  geom_density_ridges(alpha = 0.3, show.legend = NA) +
+  xlim(-3, 3) +
+  facet_grid(cols = vars(Gender)) +
+  geom_vline(aes(xintercept = 0)) + 
+  theme(legend.position="none") +
+  labs(subtitle="RNA expression") +
+  theme(plot.subtitle=element_text(size=30),
+        text = element_text(size = 14))
+
+D2 <- d_RNA %>%
+  filter(!is.na(Stage)) %>%
+  filter(!Stage %in% c("1", "3", "3B")) %>%
+  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+  ggplot(aes(Log2TN, Gene, fill = Cohort)) +  
+  geom_density_ridges(alpha = 0.3, show.legend = NA) +
+  xlim(-3, 3) +
+  facet_grid(cols = vars(Stage)) +
+  geom_vline(aes(xintercept = 0)) + 
+  theme(legend.position="none") +
+  labs(subtitle="RNA expression") +
+  theme(plot.subtitle=element_text(size=30),
+        text = element_text(size = 14))
+
+E2 <- d_RNA %>%
+  filter(!is.na(Smoking.Status)) %>%
+  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+  ggplot(aes(Log2TN, Gene, fill = Cohort)) +  
+  geom_density_ridges(alpha = 0.3, show.legend = NA) +
+  xlim(-3, 3) +
+  facet_grid(cols = vars(Smoking.Status)) +
+  geom_vline(aes(xintercept = 0)) + 
+  theme(legend.position="none") +
+  labs(subtitle="RNA expression") +
+  theme(plot.subtitle=element_text(size=30),
+        text = element_text(size = 14))
+
+F2 <- d_RNA %>%
+  filter(!is.na(EGFR.mutation.status)) %>%
+  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+  ggplot(aes(Log2TN, Gene, fill = Cohort)) +  
+  geom_density_ridges(alpha = 0.3) +
+  xlim(-3, 3) +
+  facet_grid(cols = vars(EGFR.mutation.status)) +
+  geom_vline(aes(xintercept = 0)) +
+  labs(subtitle="RNA expression") +
+  theme(plot.subtitle=element_text(size=30),
+        text = element_text(size = 14))
+
+```
+
+```{r}
+#Density ridge plot and bar plot : Q3
+
+A3 <- d_RNA %>%
+  filter(Gene %in% `7_gene_list`) %>%
+  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+  ggplot(aes(Log2TN, Gene)) +  
+  geom_density_ridges(alpha = 0.3, fill = "purple") +
+  xlim(-3, 3) +
+  geom_vline(aes(xintercept = 0)) +
+  labs(subtitle="RNA expression") +
+  theme(plot.subtitle=element_text(size=30),
+        text = element_text(size = 14))
+
+df0 <- d_RNA %>% 
+  select("ID",c(13:19)) %>% 
+  as.data.table()
+df <- melt(df0, id.vars = "ID", variable.name = "Genes", value.name = "Status")
+
+B3 <- ggplot(df, aes(x = Genes, fill = Status)) +
+  geom_bar(position="dodge") +
+  theme(text = element_text(size=10), axis.text.x = element_text(angle = 90)) +
+  labs(subtitle="Gene mutation status") +
+  theme(plot.subtitle=element_text(size=30),
+        text = element_text(size = 14))
+```
+
+```{r}
+# Density ridge plots : Q4
+
+A4 <- d_RNA %>%
+  filter(Gene %in% `7_gene_list`) %>%
+  filter(!is.na(Gender)) %>%
+  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+  ggplot(aes(Log2TN, Gene, fill = Gender)) +  
+  geom_density_ridges(alpha = 0.3) +
+  xlim(-3, 3) +
+  geom_vline(aes(xintercept = 0)) +
+  labs(subtitle="RNA expression") +
+  theme(plot.subtitle=element_text(size=30),
+        text = element_text(size = 14))
+
+B4 <- d_RNA %>%
+  filter(Gene %in% `7_gene_list`) %>%
+  filter(!is.na(Stage)) %>%
+  filter(!Stage %in% c("1", "3", "3B")) %>%
+  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+  ggplot(aes(Log2TN, Gene, fill = Stage)) +  
+  geom_density_ridges(alpha = 0.3) +
+  xlim(-3, 3) +
+  geom_vline(aes(xintercept = 0)) +
+  labs(subtitle="RNA expression") +
+  theme(plot.subtitle=element_text(size=30),
+        text = element_text(size = 14))
+
+C4 <- d_RNA %>%
+  filter(Gene %in% `7_gene_list`) %>%
+  filter(!is.na(Smoking.Status)) %>%
+  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+  ggplot(aes(Log2TN, Gene, fill = Smoking.Status)) +  
+  geom_density_ridges(alpha = 0.3) +
+  xlim(-3, 3) +
+  geom_vline(aes(xintercept = 0)) +
+  labs(subtitle="RNA expression") +
+  theme(plot.subtitle=element_text(size=30),
+        text = element_text(size = 14))
+
+D4 <- d_RNA %>%
+  filter(Gene %in% `7_gene_list`) %>%
+  filter(!is.na(Country.of.Origin)) %>%
+  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+  ggplot(aes(Log2TN, Gene, fill = Country.of.Origin)) +  
+  geom_density_ridges(alpha = 0.3) +
+  xlim(-3, 3) +
+  geom_vline(aes(xintercept = 0)) +
+  labs(subtitle="RNA expression") +
+  theme(plot.subtitle=element_text(size=30),
+        text = element_text(size = 14))
+```
+
+```{r fig.height=18, fig.width=28}
+#Combine plots together
+
+Figure1 <- plot_grid(A1, B1, C1, D1, E1, F1, G1, H1, A3, B3, 
+          labels = c("A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "A3", "B3"), 
+          ncol = 4)
+
+Figure2 <- plot_grid(A2, B2, NULL, NULL, C2, D2, E2, F2, A4, B4, C4, D4,
+          labels = c("A2", "B2","", "", "C2", "D2", "E2", "F2", "A4", "B4", "C4", "D4"), 
+          ncol = 4)
+
+Figure1
+
+Figure2
+```
+
+
+## 4. Discussion
+
+### 4.1. Answering Questions
+
+Q1. Do other countries on multi-national cohort also show Taiwanese-specific characteristics? (high percentage of never-smokers, EGFR mutations, female, early stage)
+
+A1. (Figure A1-H1) : Compared cohort by cohort, the answer is 'yes' to gender, smoking status and EGFR mutation status(figure A1, B1, D1). Not for LUAD stages, as we can see that early stage patients are dominant in both cohorts(figure C1). On the other hand, by country-wise comparison, those four properties are not Taiwanese-specific. I can see that 'female-dominant' property is Taiwan-specific(figure E1), but all others are not. For smoking status, non-smoker patients also dominate in Vietnamese and Chinese samples(figure F1). Early stage patients also dominate in Vietnam and USA(figure G1), as well as Taiwan. In addition to Taiwan, EGFR mutation samples outnumber WT samples in China too(figure H1). Also, the sample size of countries other than Taiwan, China, Vietnam, and USA were not big enough to compare.
+ To sum up, I can say that compared to global trend, the four characteristics are Taiwan-specific, but this conclusion might change in future analysis if the cohort size increases and samples are evenly collected from each country.
+
+
+Q2. Compare gene expressions by cohorts. Are gene expression differences related to TW cohort-specific characteristics?
+
+A2. (Figure A2-F2) : Overall comparison of two cohort's gene expression showed difference in some extent(figure A2). To inspect if the difference was due to the 4 'TW cohort-specific' characteristics, I faceted gene expressions by those 4. If those 4 affected the gene expression, density plots will differ greatly when grouped by those 4 properties. 
+ As a result(figure C2-F2), I could found significant differences on log2T/N distribution when the plots were separated by the 4 properties. For example, in figure D2, gene expression between LUAD stages 2A and 3B differ greatly between cohorts. All of the stages combine together to show the overall differences on gene expression between cohorts like figure A2. In conclusion, since all 4 plots showed significant differences on gene expression between cohorts, I can claim that some of the reasons why TW cohort's RNA expressions differ from CPTAC cohort include 'TW cohort having high percentage of EGFR gene mutated, female, early stage, never-smoker patients'. Plus, there might be other properties that make difference between cohorts, which are not addressed in this article.
+ While I thoroughly investigated RNA expression data, I could not use protein expression data, because I noticed that log2T/N values differed too much(figure B2). I addressed this problem in "4.2. Imperfections in data munging" part.
+
+
+Q3. Compare gene expressions of 'the 7 cancer related genes'(TP53, KRAS, STK11, EGFR, RB1, KEAP1, BRAF). If genes are over-/under-expressed, is it because of the mutations on certain cancer related genes?
+
+A3. (Figure A3, B3) : For question 3, I filtered the 7 cancer related genes since I had their mutation status information. As a result, I found out that those genes rarely had mutations, except for EGFR and TP53. If existence of mutation directly affected the gene expression, I can say that over-expression of EGFR and TP53 genes(figure B3) are caused by gene mutations. TP53 gene is mainly related to DNA repair, cell cycle regulation, apoptosis, and EGFR gene to cell growth and cell division. Therefore, over-expression of these two genes(figure A3) lead to abnormal growth of cells - cancer.
+ The remaining 5 genes did not show significant amount of mutations(figure B3), so I cannot explain the reason of over-/under-expression by this approach. Therefore, to examine correlations directly, I prepared question 4.
+
+
+Q4. Can we find correlations between the 7 genes' over-/under-expressions and patient's properties(gender, smoking status, LUAD stage, country of origin)?
+
+A4. (Figure A4-D4) : I already verified that patients' properties do affect gene expression, but here I inspected 7 specific cancer related genes, and examined the whole data instead of splitting it into two cohorts. 
+ As a result, 4 plots that were grouped by each of 4 patient properties showed significant differences on gene expression. In detail, figure C4 showed over-expression on TP53 and EGFR gene because all three categories of smoking status were oriented towards right side(log2T/N>0, T>N).
+ However, we have to be careful with distortions innate in 'density' plot. In figure B4, for gene KEAP1, we might think that KEAP1 gene is over-expressed because of stage 4 patient, since sample size seems to be very large. Yet the plot doesn't show that the actual sample size of stage 4 patients are very small, just as shown below.
+```{r}
+d_RNA %>%
+  filter(Gene == "KRAS") %>%
+  filter(!is.na(Stage)) %>% 
+  count(Stage)
+```
+
+
+### 4.2. Imperfections in data munging (related to figure B2)
+
+To answer questions 2-4 on both transcriptome and proteome level, I had to include plots for both. However, when drawing plots with protein expression data, I found out that log2T/N value range differed greatly between two cohorts, as we can see here:
+```{r}
+range(d_TW_Protein_T$Log2TN, na.rm = TRUE)
+
+range(d_CPTAC_Protein_T$Log2TN, na.rm = TRUE)
+```
+After inspecting, I found out that normalization methods differed from Chen's and Gillette's research, since TW protein data was normalized by median, and CPTAC protein data was normalized by 'two-component normalization' method. Since I could not convert two-component normalized data into median normalized data, I could only compare protein expression data within each cohorts, not between them.
+
+### 4.3. Sum-up
+
+In this portfolio, I mainly examined the difference between TW cohort and CPTAC cohort, and inspected in detail by answering 4 questions. As a result, I verified that the 4 Taiwan-specific characteristics of LUAD patients mentioned in Chen's research were prominent compared to CPTAC's multi-national cohort. Those 4 properties *were* responsible for the gene expression differences between cohorts, and I concluded that there might be more implicit differentiating characteristics. I also investigated the correlation of the 7 cancer related genes' over-/under-expressions with presence of somatic muations and other patient properties, and made a careful suggestion: TP53 and EGFR gene mutations might be strongly correlated with over-expression. The 7 genes' expression also seemed to differ due to some patient properties, including gender, smoking status, country of origin, and LUAD stage. In addition, I addressed some precautions when interpreting the visualized data and the problem I encountered with protein expression data too.
+
+## 5. Resource
+
+Gillette, M. et al. (2020). Proteogenomic Characterization Reveals Therapeutic Vulnerabilities in Lung Adenocarcinoma. _Cell, 182(1)_, 200-225. doi:https://doi.org/10.1016/j.cell.2020.06.013
+
+Chen, Y. et al. (2020). Proteogenomics of Non-smoking Lung Cancer in East Asia Delineates Molecular Signatures of Pathogenesis and Progression. _Cell, 182(1)_, 226,244 doi:https://doi.org/10.1016/j.cell.2020.06.012
