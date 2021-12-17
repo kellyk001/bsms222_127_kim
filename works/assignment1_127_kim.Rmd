@@ -1,21 +1,80 @@
 ---
-title: "assignment1_127_kim"
+title: "Assignment1_127_kim"
 output:
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 # Investigating the difference between Taiwan cohort(Chen et al., 2020) and CPTAC cohort(Gillette et al., 2020) patients' gene expression on transcriptome and proteome level.
  
+## Index
+
+#### *1. Introduction*
+  1.1. Overview
+  
+  1.2. Detailed objectives
+
+
+#### *2. Preparing the data*
+  2.1. Load the data
+  
+  2.2. Cut out and merge the data
+  
+   2.2.1. TW data
+    
+   2.2.2. CPTAC data
+  
+  
+#### *3. Visualization*
+  3.1. Make tidier
+  
+  3.2. Plots
+  
+   3.2.1. Question 1
+    
+   3.2.2. Question 2
+    
+   3.2.3. Question 3
+
+
+#### *4. Discussion*
+  4.1. Summarize and discuss
+  
+  4.2. Imperfections in data munging
+  
+  4.3. Suggestions for further investigations
+
+
+#### *5. Resource*
+
+ 
  
 ## 1. Introduction
+
+### 1.1. Overview
 
 Chen's research was based on Taiwanese LUAD patients' samples, and the cohort showed its unique patterns, including high proportion of never-smokers, female, early stage LUAD, and many more. Comparing to western region biased TCGA cohort, the research indicated the unique trends shown from each cohorts. 
 
 Here, I am going to investigate the different trends of gene expression between Taiwan cohort and another cohort, on transcriptome and proteome level. To compare with Taiwan cohort(Chen et al., 2020), I selected the most recent and multi-national LUAD research(Gillette et al., 2020) in NCI(National Cancer Institute) portal which used CPTAC(Clinical Proteomic Tumor Analysis Consortium) project data. 
 
-Since the CPTAC cohort data includes multi-national patients, it can show the global trend of gene expressions, and therefore comparing it with Taiwan cohort can show Taiwanese-specific characteristics to overall worldwide trend.
+Since the CPTAC cohort data includes multi-national patients, it would show the global trend of gene expressions, and therefore comparing it with Taiwan cohort will identify Taiwan-specific characteristics to overall worldwide trend.
 
-I will examine if four of the unique characteristics of Taiwan cohort mentioned in Chen's research - high proportion of never-smokers, EGFR mutations, females, early stage patients - are also found in CPTAC cohort. Also, I will compare gene expressions between two cohorts and investigate if RNA/protein expression are effected by somatic mutations of some important cancer related genes - TP53, KRAS, STK11, EGFR, RB1, KEAP1, BRAF - that are addressed in Gillette's research.
+### 1.2. Detailed objectives
+
+First, I will examine if 4 unique characteristics of Taiwan cohort mentioned in Chen's research - high proportion of nonsmokers, EGFR mutations, females, early stage patients - are also found in CPTAC multi-national cohort.
+
+Next, I will compare RNA/protein-level gene expressions of the 7 important 'cancer related genes'(TP53, KRAS, STK11, EGFR, RB1, KEAP1, BRAF - addressed in Gillette's research) between two cohorts. These genes are significantly mutated genes with Benjamini Hochberg (BH) FDR < 0.01, visualized with the oncoplot which depicts mutually exclusive driver oncogene somatic mutations(Figure 1D in Gillette's research).
+
+Then I will figure out if the gene expression of 7 genes correlate with the 4 properties(smoking status, EGFR mutation, gender, LUAD stage) in each cohort by ANOVA, and discuss what the results mean.
+
+These objectives can be summarized into 3 questions :
+
+**Q1. Do other countries on multi-national cohort also show 4 Taiwan cohort-specific characteristics(high percentage of nonsmokers, EGFR mutations, female, early stage)?**
+
+**Q2. Compare gene expressions of 'the 7 cancer related genes'(TP53, KRAS, STK11, EGFR, RB1, KEAP1, BRAF) by cohorts.**
+
+**Q3. Do gene expression differences relate to Taiwan cohort-specific characteristics?**
+
 
 
 ## 2. Preparing the data
@@ -87,7 +146,7 @@ d_7_gene_mut_1 <- d_7_gene_mut %>%
 
 ```
 
-#### 1) TW data
+#### 2.2.1. TW data
 
 First, we will only select 25 cancer related genes from RNA, protein data frame. 
 Next, we will merge the patient information(gender, age, smoking status, cancer stage, EGFR status) to RNA and protein expression data. We also flip the rows and columns around, so each rows will indicate patients, and the newly added information will become new columns.
@@ -127,7 +186,7 @@ setdiff(gene_list, d_TW_Protein_0 %>%
 
 ```
 
-#### 2) CPTAC data
+#### 2.2.2. CPTAC data
 
 First, we will cut out redundant information in CPTAC data frames, and only leave patient ID, smoking status, country of origin, age, gender, EGFR mutation status, and gene abundance information for the 25 genes. Also, in CPTAC data, it *is* normalized and log2-transformed, but the tumor and NAT sample data is split. Therefore, we have to calculate the log2T/N manually.
 
@@ -337,31 +396,28 @@ d_Protein$Stage %<>%
 #Let's add a column for 'region of origin' for later use.
 
 d_RNA %<>% 
-  mutate(Region.of.Origin = ifelse(Country.of.Origin %in% c("Taiwan", "China", "Vietnam"), "Asian", "Western"))
+  mutate(Region.of.Origin = ifelse(Country.of.Origin %in% c("Taiwan", "china", "vietnam"), "Asian", "Western"))
 
 d_Protein %<>% 
-  mutate(Region.of.Origin = ifelse(Country.of.Origin %in% c("Taiwan", "China", "Vietnam"), "Asian", "Western"))
+  mutate(Region.of.Origin = ifelse(Country.of.Origin %in% c("Taiwan", "china", "vietnam"), "Asian", "Western"))
 
 ```
 
 ```{r}
+library(pander)
 #My tidy data
 
-head(d_RNA)
+head(d_RNA) %>% pander()
 
-head(d_Protein)
+head(d_Protein) %>% pander()
 ```
 
 
 ### 3.2. Plots
 
-For the investigation, I've prepared some questions.
+#### 3.2.1. Question 1
 
-Q1. Do other countries on multi-national cohort also show Taiwanese-specific characteristics? (high percentage of never-smokers, EGFR mutations, female, early stage)
-Q2. Compare gene expressions by cohorts. Are gene expression differences related to TW cohort-specific characteristics?
-Q3. Compare gene expressions of 'the 7 cancer related genes'(TP53, KRAS, STK11, EGFR, RB1, KEAP1, BRAF). If genes are over-/under-expressed, is it because of the mutations on certain cancer related genes?
-Q4. Can we find correlations between the 7 genes' over-/under-expressions and patient's properties(gender, smoking status, LUAD stage, country of origin)?
-
+**Q1. Do other countries on multi-national CPTAC cohort also show 4 TW cohort-specific characteristics(high percentage of nonsmokers, EGFR mutations, female, early stage)?**
 
 ```{r}
 library(ggridges)
@@ -370,305 +426,466 @@ library(RColorBrewer)
 library(ggrepel)
 library(data.table)
 
-#Bar plots : Q1
+#Cohort-wise comparison of :
 
-A1 <- d_RNA %>%
+#1. Gender
+A <- d_RNA %>%
   ggplot(aes(Gender, fill = Cohort)) + 
-  geom_bar() +
-  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5)) +
+  geom_bar(show.legend = FALSE) +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5),size=3) +
   theme(axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
-        text = element_text(size = 14)) + 
+        text = element_text(size = 9)) + 
   theme(legend.position="none")
 
-B1 <- d_RNA %>%
+#2. Smoking status
+B <- d_RNA %>%
  ggplot(aes(Smoking.Status, fill = Cohort)) + 
-  geom_bar() +
-  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5)) +
+  geom_bar(show.legend = FALSE) +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5),size=3) +
   theme(axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
-        text = element_text(size = 14)) + 
+        text = element_text(size = 9)) + 
   theme(legend.position="none")
 
-C1 <- d_RNA %>%
+#3. LUAD stage
+C <- d_RNA %>%
   ggplot(aes(Stage, fill = Cohort)) + 
-  geom_bar() +
-  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5)) +
+  geom_bar(show.legend = FALSE) +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5),size=3) +
   theme(axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
-        text = element_text(size = 14)) + 
+        text = element_text(size = 9)) + 
   theme(legend.position="none")
 
-D1 <- d_RNA %>%
+#4. EGFR mutation status
+D <- d_RNA %>%
   ggplot(aes(EGFR.mutation.status, fill = Cohort)) + 
   geom_bar() +
-  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5)) +
-  theme(axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        text = element_text(size = 14))
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5),size=3) +
+  theme(text = element_text(size = 9),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
 
-E1 <- d_RNA %>%
-  ggplot(aes(Gender, fill = Country.of.Origin)) + 
-  geom_bar() +
-  geom_text_repel(aes(label=..count..),stat="count",position=position_stack(0.5)) +
-  theme(axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        text = element_text(size = 14)) + 
-  theme(legend.position="none")
 
-F1 <- d_RNA %>% 
-  ggplot(aes(Smoking.Status, fill = Country.of.Origin)) + 
-  geom_bar() +
-  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5), size = 3, force = 0.2) +
-  theme(axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        text = element_text(size = 14)) + 
-  theme(legend.position="none")
+#Title
+title <- ggdraw() + 
+  draw_label("Taiwan-specific characteristics Compared by Cohorts",
+             fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
 
-G1 <- d_RNA %>% 
-  ggplot(aes(Stage, fill = Country.of.Origin)) + 
-  geom_bar() +
-  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5), size = 3.2) +
-  theme(axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        text = element_text(size = 14)) + 
-  theme(legend.position="none")
+#Plot
+plot_row1 <- plot_grid(A, B, C, D,
+                       labels = c("E", "F", "G", "H"),
+                       ncol = 2)
 
-H1 <- d_RNA %>%
-  ggplot(aes(EGFR.mutation.status, fill = Country.of.Origin)) + 
-  geom_bar() +
-  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5)) +
-  theme(axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        text = element_text(size = 14))
+plot1 <- plot_grid(title, plot_row1,
+                   ncol = 1,
+                   rel_heights = c(0.1, 1))
+plot1
 ```
 
 
-```{r}
-#Density ridge plots : Q2
+As we can see, three of the four 'Taiwan-specific' characteristics designated in Chen's research - high percentage of female, nonsmokers and EGFR mutations - do not appear globally in multi-nation CPTAC cohort. However, in both cohorts, early stage patients are dominant.
+To check if these properties are in fact Taiwan-specific or *Asian*-specific, plots below show the 4 characteristics by region of origin(Asian and Western) in CPTAC cohort.
 
-A2 <- d_RNA %>%
+```{r}
+#Region-wise comparison within CPTAC cohort
+
+#1. Gender
+E <- d_RNA %>% 
+  filter(Cohort == "Multi-nation") %>%
+  ggplot(aes(Gender, fill = Region.of.Origin)) + 
+  scale_fill_manual("legend", values = c("Asian" = "orange", "Western" = "green")) +
+  geom_bar(show.legend = FALSE) +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5),size=3) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        text = element_text(size = 9)) + 
+  theme(legend.position="none")
+
+#2. Smoking status
+F <- d_RNA %>%
+  filter(Cohort == "Multi-nation") %>%
+  ggplot(aes(Smoking.Status, fill = Region.of.Origin)) + 
+  scale_fill_manual("legend", values = c("Asian" = "orange", "Western" = "green")) +
+  geom_bar(show.legend = FALSE) +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5),size=3) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        text = element_text(size = 9)) + 
+  theme(legend.position="none")
+
+#3. LUAD stage
+G <- d_RNA %>%
+  filter(Cohort == "Multi-nation") %>%
+  ggplot(aes(Stage, fill = Region.of.Origin)) + 
+  scale_fill_manual("legend", values = c("Asian" = "orange", "Western" = "green")) +
+  geom_bar(show.legend = FALSE) +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5),size=3) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        text = element_text(size = 9)) + 
+  theme(legend.position="none")
+
+#4. EGFR mutation status
+H <- d_RNA %>%
+  filter(Cohort == "Multi-nation") %>%
+  ggplot(aes(EGFR.mutation.status, fill = Region.of.Origin)) + 
+  scale_fill_manual("legend", values = c("Asian" = "orange", "Western" = "green")) +
+  geom_bar() +
+  geom_text(aes(label=..count..),stat="count",position=position_stack(0.5),size=3) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        text = element_text(size = 9))
+
+#Title
+title <- ggdraw() + 
+  draw_label("Taiwan-specific characteristics within CPTAC cohort",
+             fontface = 'bold', x = 0, hjust = 0) +
+  theme(plot.margin = margin(0, 0, 0, 7))
+
+#Plot
+plot_row2 <- plot_grid(E, F, G, H,
+                       labels = c("E", "F", "G", "H"),
+                       ncol = 2)
+
+plot2 <- plot_grid(title, plot_row2,
+                   ncol = 1,
+                   rel_heights = c(0.1, 1))
+plot2
+```
+
+
+As we can see, one of four characteristics - high percentage of nonsmoker - appears to be Asian-specific in CPTAC cohort.
+
+**Answer to question 1 :**
+
+In overall, these two sets of plots might indicate that high percentage of female and EGFR mutations are Taiwan-specific. Nonsmoker LUAD patients are dominant in Taiwan *AND* other Asian countries. Early stage patients are dominant world-wide.
+In short, 'early stage' patient characteristic is not Taiwan-specific, according to these two cohorts.
+
+
+#### 3.2.2. Question 2
+
+**Q2. Compare gene expressions of 'the 7 cancer related genes'(TP53, KRAS, STK11, EGFR, RB1, KEAP1, BRAF) by cohorts.**
+
+To answer question 2, we can create density ridge plot to visualize the gene expression by cohorts, and conduct ANOVA to compare the distributions.
+
+1) RNA level expression
+
+```{r}
+#Density ridges plot
+I <- d_RNA %>% 
+  filter(Gene %in% `7_gene_list`) %>%
+  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+  ggplot(aes(Log2TN, Gene, fill = Cohort)) +
+  geom_density_ridges(alpha = 0.3) +
+  xlim(-3, 3) +
+  geom_vline(aes(xintercept = 0)) +
+  labs(title = "RNA-level expression by Cohorts") +
+  theme(title = element_text(size=15))
+I
+```
+
+2) Protein level expression
+
+```{r}
+#Density ridges plot
+L <- d_Protein %>% 
   filter(Gene %in% `7_gene_list`) %>%
   mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
   ggplot(aes(Log2TN, Gene, fill = Cohort)) +  
   geom_density_ridges(alpha = 0.3) +
   xlim(-3, 3) +
-  geom_vline(aes(xintercept = 0)) + 
-  theme(legend.position="none") +
-  labs(subtitle="RNA expression") +
-  theme(plot.subtitle=element_text(size=30),
-        text = element_text(size = 14))
-
-B2 <- d_Protein %>% 
-  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
-  ggplot(aes(Log2TN, Gene, fill = Cohort)) +  
-  geom_density_ridges(alpha = 0.3) +
-  xlim(-3, 3) +
   geom_vline(aes(xintercept = 0)) +
-  labs(subtitle="Protein expression") +
-  theme(plot.subtitle=element_text(size=30),
-        text = element_text(size = 14)) #There must be something wrong in CPTAC data..
+  labs(title = "Protein-level expression by Cohorts") +
+  theme(title = element_text(size=15))
+L
+```
 
-C2 <- d_RNA %>%
-  filter(!is.na(Gender)) %>%
+
+Here, we can clearly see that density ridge plot for protein-level expression is odd. It seems that multi-nation cohort's log2T/N values range much wider than that of Taiwan's. I addressed this problem in part 4.2.
+
+Simply looking at the plot, gene expressions seem quite different between the cohorts. However, we do not know if distributions between two cohorts differ significantly or not by merely looking at the plot, so next I conducted ANOVA test.
+
+```{r}
+library(ggpubr)
+library(rstatix)
+library(emmeans)
+
+#Before ANOVA, check normality in each gene group : remove extreme outliers and label '_aov'
+ex_outliers <- d_RNA %>% 
+  filter(Gene %in% `7_gene_list`) %>%
+  group_by(Gene) %>%
+  identify_outliers(Log2TN) %>%
+  as.data.frame() %>%
+  filter(is.extreme == TRUE) %>%
+  select(Log2TN) %>%
+  pull()
+
+d_RNA_aov <- d_RNA %>%
+  filter(!Log2TN %in% c(ex_outliers)) %>%
+  filter(Gene %in% `7_gene_list`)
+
+J <- d_RNA_aov %>%
+  filter(Gene %in% `7_gene_list`) %>%
+  ggqqplot("Log2TN", facet.by = "Gene") +
+  labs(title = "Normality check - QQ plot") +
+  theme(title = element_text(size=15))
+J
+
+#ANOVA test
+aov_RNA <- d_RNA_aov %>% anova_test(Log2TN ~ Gene * Cohort)
+aov_RNA #Note : Significant two-way interaction between Cohorts and Genes(p < 0.05).
+
+#Post-hoc tests
+#1. Simple main effects : group the data by Gene
+model <- lm(Log2TN ~ Gene * Cohort, data = d_RNA_aov)
+d_RNA_aov %>%
+  group_by(Gene) %>%
+  anova_test(Log2TN ~ Cohort, error = model) #Note : Significant differences(p > 0.05) of 7 gene expressions (mean Log2T/N) between cohorts, except for BRAF and KEAP1.
+
+#2. Pairwise comparisons
+pwc <- d_RNA_aov %>% 
+  group_by(Gene) %>%
+  emmeans_test(Log2TN ~ Cohort, p.adjust.method = "bonferroni") 
+pwc
+
+#Visualize
+pwc <- pwc %>% add_xy_position(x = "Gene")
+
+K <- d_RNA_aov %>%
   mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
-  ggplot(aes(Log2TN, Gene, fill = Cohort)) +  
-  geom_density_ridges(alpha = 0.3, show.legend = NA) +
-  xlim(-3, 3) +
-  facet_grid(cols = vars(Gender)) +
-  geom_vline(aes(xintercept = 0)) + 
-  theme(legend.position="none") +
-  labs(subtitle="RNA expression") +
-  theme(plot.subtitle=element_text(size=30),
-        text = element_text(size = 14))
+  ggplot(aes(x = Gene, y = Log2TN, color = Cohort)) +
+  geom_boxplot() +
+  labs(title = "Correlation between Cohorts per Gene",
+    subtitle = get_test_label(aov_RNA, detailed = TRUE),
+    caption = get_pwc_label(pwc)) +
+  stat_compare_means(aes(group = Cohort), label = "p.signif") +
+  theme(title = element_text(size=12),
+        plot.subtitle = element_text(size=8))
+K
+```
 
-D2 <- d_RNA %>%
-  filter(!is.na(Stage)) %>%
-  filter(!Stage %in% c("1", "3", "3B")) %>%
-  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
-  ggplot(aes(Log2TN, Gene, fill = Cohort)) +  
-  geom_density_ridges(alpha = 0.3, show.legend = NA) +
-  xlim(-3, 3) +
-  facet_grid(cols = vars(Stage)) +
-  geom_vline(aes(xintercept = 0)) + 
-  theme(legend.position="none") +
-  labs(subtitle="RNA expression") +
-  theme(plot.subtitle=element_text(size=30),
-        text = element_text(size = 14))
 
-E2 <- d_RNA %>%
+**Answer to question 2 : (for RNA data)**
+
+According to ANOVA result, there are interactions between cohorts and 7 genes on Log2T/N value(gene expression), with p < 0.0001(ANOVA test). Also, mean Log2T/N(gene expression) between two cohorts differ significantly, for five of the 7 genes(EGFR, KRAS, RB1, STK11, TP53), with p < 0.05(simple main effect, pairwise comparison).
+
+So, we verified that 5 gene expression variation of two cohorts differ from each other to a statistically meaningful extent. Then, what makes the difference between two cohorts? This leads to question 3.
+
+
+#### 3.2.3. Question 3
+
+**Q3. Are gene expression differences related to Taiwan cohort-specific characteristics?**
+
+To answer question 3, I created density ridge plots for 5 genes, excluding two(KEAP1, BRAF) that didn't show significant difference between cohorts. Then I conducted ANOVA test for the **three** TW cohort-specific characteristics(gender, smoking status, EGFR mutation status) verified in part 3.2.1. Question 1.
+
+- RNA level expression
+
+Are cohort-wise gene expression differences due to :
+
+1) Gender?
+```{r}
+#Density ridges plot
+M <- d_RNA %>%
+ filter(Gene %in% `7_gene_list`) %>%
+ filter(!Gene %in% c("KEAP1", "BRAF")) %>%
+ filter(!is.na(Gender)) %>%
+ mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+ ggplot(aes(Log2TN, Gene, fill = Gender)) + 
+ geom_density_ridges(alpha = 0.3) +
+ xlim(-3, 3) +
+ geom_vline(aes(xintercept = 0)) +
+ labs(subtitle="Gender") +
+ theme(plot.subtitle=element_text(size=14),
+ text = element_text(size = 10))
+M
+
+#ANOVA test
+aov_RNA_Gender <- d_RNA_aov %>% anova_test(Log2TN ~ Gene * Gender)
+aov_RNA_Gender #Note : No significant two-way interaction between Gender and Genes(p > 0.05).
+```
+
+
+The density plot might seem to have significant difference of Log2T/N variation between female and male. However, there are no significant interactions between gender and 7 genes, with p  > 0.05(ANOVA test).
+
+
+2) Smoking status?
+```{r}
+#Density ridges plot
+N <- d_RNA %>%
+ filter(Gene %in% `7_gene_list`) %>%
+ filter(!Gene %in% c("KEAP1", "BRAF")) %>%
+ filter(!is.na(Smoking.Status)) %>%
+ mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+ ggplot(aes(Log2TN, Gene, fill = Smoking.Status)) + 
+ geom_density_ridges(alpha = 0.6) +
+ scale_fill_manual(values=c("#F8766D", "#FFC425", "#00BA38")) +
+ xlim(-3, 3) +
+ geom_vline(aes(xintercept = 0)) +
+ labs(subtitle="Smoking status") +
+ theme(plot.subtitle=element_text(size=14),
+ text = element_text(size = 10))
+N
+
+#ANOVA test
+aov_RNA_Smoke <- d_RNA_aov %>% anova_test(Log2TN ~ Gene * Smoking.Status)
+aov_RNA_Smoke #Note : Significant two-way interaction between Smoking status and Genes(p < 0.05).
+
+#Post-hoc tests
+#1. Simple main effects : group the data by Gene
+model <- lm(Log2TN ~ Gene * Smoking.Status, data = d_RNA_aov)
+d_RNA_aov %>%
+  group_by(Gene) %>%
+  anova_test(Log2TN ~ Smoking.Status, error = model) #Note : Significant differences(p > 0.05) of 7 gene expressions (mean Log2T/N) between smoking status - except for BRAF, KRAS, and RB1.
+
+#2. Pairwise comparisons
+pwc_Smoke <- d_RNA_aov %>% 
+  filter(!Gene %in% c("KEAP1", "BRAF")) %>%
+  group_by(Gene) %>%
+  emmeans_test(Log2TN ~ Smoking.Status, p.adjust.method = "bonferroni") 
+pwc_Smoke
+
+#Visualize
+pwc_Smoke <- pwc_Smoke %>% add_xy_position(x = "Gene")
+
+O <- d_RNA_aov %>%
   filter(!is.na(Smoking.Status)) %>%
-  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
-  ggplot(aes(Log2TN, Gene, fill = Cohort)) +  
-  geom_density_ridges(alpha = 0.3, show.legend = NA) +
-  xlim(-3, 3) +
-  facet_grid(cols = vars(Smoking.Status)) +
-  geom_vline(aes(xintercept = 0)) + 
-  theme(legend.position="none") +
-  labs(subtitle="RNA expression") +
-  theme(plot.subtitle=element_text(size=30),
-        text = element_text(size = 14))
+  filter(!Gene %in% c("KEAP1", "BRAF")) %>%
+  ggplot(aes(x = Gene, y = Log2TN, color = Smoking.Status)) +
+  geom_boxplot() +
+  scale_color_manual(values=c("#F8766D", "#FFC425", "#00BA38")) +
+  labs(title = "Correlation between Smoking status per Gene",
+    subtitle = get_test_label(aov_RNA_Smoke, detailed = TRUE),
+    caption = get_pwc_label(pwc_Smoke)) +
+  stat_pvalue_manual(pwc_Smoke, label = "p.adj.signif", hide.ns = TRUE) +
+  theme(title = element_text(size=12),
+        plot.subtitle = element_text(size=8))
+O
 
-F2 <- d_RNA %>%
+#Pairs with significant p-value : ordered by p-value(ascending)
+pwc_Smoke %>% 
+  filter(p.adj.signif != "ns") %>%
+  select(c(Gene, group1, group2, p)) %>%
+  arrange(p) %>%
+  mutate(pair = paste(Gene, paste(group1, group2, sep = ' & '), sep = '/ ')) %>%
+  select(pair)
+```
+
+
+The density plot seem to have significant differences of Log2T/N variation between smoking status. In fact, there are significant interactions between smoking status and 5 genes on Log2T/N value(gene expression), with p < 0.0001(ANOVA test). Also, mean Log2T/N(gene expression) between three smoking status differ significantly in three genes - EGFR, TP53, STK11 - with p < 0.05(simple main effect, pairwise comparison).
+
+3) EGFR mutation status?
+```{r}
+#Density ridges plot
+P <- d_RNA %>%
+ filter(Gene %in% `7_gene_list`) %>%
+ filter(!Gene %in% c("KEAP1", "BRAF")) %>%
+ filter(!is.na(EGFR.mutation.status)) %>%
+ mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
+ ggplot(aes(Log2TN, Gene, fill = EGFR.mutation.status)) +  
+ geom_density_ridges(alpha = 0.3) +
+ scale_fill_manual(values=c("orange", "purple")) +
+ xlim(-3, 3) +
+ geom_vline(aes(xintercept = 0)) +
+ labs(subtitle="EGFR mutation status") +
+ theme(plot.subtitle=element_text(size=14),
+ text = element_text(size = 10))
+P
+
+#ANOVA test
+aov_RNA_EGFR <- d_RNA_aov %>% anova_test(Log2TN ~ Gene * EGFR.mutation.status)
+aov_RNA_EGFR #Note : Significant two-way interaction between EGFR mutation status and Genes(p < 0.05).
+
+#Post-hoc tests
+#1. Simple main effects : group the data by Gene
+model <- lm(Log2TN ~ Gene * EGFR.mutation.status, data = d_RNA_aov)
+d_RNA_aov %>%
+  group_by(Gene) %>%
+  anova_test(Log2TN ~ EGFR.mutation.status, error = model) #Note : Significant differences(p > 0.05) of 7 gene expressions (mean Log2T/N) between smoking status - except for KEAP1, KRAS, TP53.
+
+#2. Pairwise comparisons
+pwc_EGFR <- d_RNA_aov %>% 
+  filter(!Gene %in% c("KEAP1", "BRAF")) %>%
+  group_by(Gene) %>%
+  emmeans_test(Log2TN ~ EGFR.mutation.status, p.adjust.method = "bonferroni") 
+pwc_EGFR
+
+#Visualize
+pwc_EGFR <- pwc_EGFR %>% add_xy_position(x = "Gene")
+
+Q <- d_RNA_aov %>%
   filter(!is.na(EGFR.mutation.status)) %>%
-  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
-  ggplot(aes(Log2TN, Gene, fill = Cohort)) +  
-  geom_density_ridges(alpha = 0.3) +
-  xlim(-3, 3) +
-  facet_grid(cols = vars(EGFR.mutation.status)) +
-  geom_vline(aes(xintercept = 0)) +
-  labs(subtitle="RNA expression") +
-  theme(plot.subtitle=element_text(size=30),
-        text = element_text(size = 14))
+  filter(!Gene %in% c("KEAP1", "BRAF")) %>%
+  ggplot(aes(x = Gene, y = Log2TN, color = EGFR.mutation.status)) +
+  geom_boxplot() +
+  scale_color_manual(values=c("orange", "purple")) +
+  labs(title = "Correlation between EGFR mutation status per Gene",
+    subtitle = get_test_label(aov_RNA_EGFR, detailed = TRUE),
+    caption = get_pwc_label(pwc_EGFR)) +
+  stat_pvalue_manual(pwc_EGFR, label = "p.adj.signif", hide.ns = TRUE, ) +
+  theme(title = element_text(size=12),
+        plot.subtitle = element_text(size=8))
+Q
 
 ```
 
-```{r}
-#Density ridge plot and bar plot : Q3
 
-A3 <- d_RNA %>%
-  filter(Gene %in% `7_gene_list`) %>%
-  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
-  ggplot(aes(Log2TN, Gene)) +  
-  geom_density_ridges(alpha = 0.3, fill = "purple") +
-  xlim(-3, 3) +
-  geom_vline(aes(xintercept = 0)) +
-  labs(subtitle="RNA expression") +
-  theme(plot.subtitle=element_text(size=30),
-        text = element_text(size = 14))
+By looking at density plot, I expected EGFR and RB1 to have statistically meaningful difference between EGFR mutation existence and nonexistence. And this time, I guessed accurately. There are significant interactions between EGFR mutation status and 5 genes on Log2T/N value(gene expression), with p < 0.0001(ANOVA test). Also, mean Log2T/N(gene expression) between EGFR mutation state differ significantly in two genes - EGFR and RB1 - with p < 0.05(simple main effect, pairwise comparison).
 
-df0 <- d_RNA %>% 
-  select("ID",c(13:19)) %>% 
-  as.data.table()
-df <- melt(df0, id.vars = "ID", variable.name = "Genes", value.name = "Status")
 
-B3 <- ggplot(df, aes(x = Genes, fill = Status)) +
-  geom_bar(position="dodge") +
-  theme(text = element_text(size=10), axis.text.x = element_text(angle = 90)) +
-  labs(subtitle="Gene mutation status") +
-  theme(plot.subtitle=element_text(size=30),
-        text = element_text(size = 14))
-```
+**Answer to question 3 : (for RNA data)**
 
-```{r}
-# Density ridge plots : Q4
+Overall, when I draw a density ridge plot, I cannnot figure out if the variation of the plots differ from each other, just by looking at them. Therefore, we have to use a tool to calculate the difference for us, and that is ANOVA. By applying ANOVA test and its follow-up tests, I found out that none of the **5** genes - whose mean Log2T/N value(gene expression) showed significant difference between TW and CPTAC cohort - were related to gender. Yet, smoking status and EGFR mutation status were related to the difference between two cohorts. In detail, three genes(EGFR, TP53, STK11) were significantly related to mean deviations between smoking status and two(EGFR, RB1) were related to difference of mean Log2T/N depending on EGFR mutation existence.
 
-A4 <- d_RNA %>%
-  filter(Gene %in% `7_gene_list`) %>%
-  filter(!is.na(Gender)) %>%
-  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
-  ggplot(aes(Log2TN, Gene, fill = Gender)) +  
-  geom_density_ridges(alpha = 0.3) +
-  xlim(-3, 3) +
-  geom_vline(aes(xintercept = 0)) +
-  labs(subtitle="RNA expression") +
-  theme(plot.subtitle=element_text(size=30),
-        text = element_text(size = 14))
-
-B4 <- d_RNA %>%
-  filter(Gene %in% `7_gene_list`) %>%
-  filter(!is.na(Stage)) %>%
-  filter(!Stage %in% c("1", "3", "3B")) %>%
-  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
-  ggplot(aes(Log2TN, Gene, fill = Stage)) +  
-  geom_density_ridges(alpha = 0.3) +
-  xlim(-3, 3) +
-  geom_vline(aes(xintercept = 0)) +
-  labs(subtitle="RNA expression") +
-  theme(plot.subtitle=element_text(size=30),
-        text = element_text(size = 14))
-
-C4 <- d_RNA %>%
-  filter(Gene %in% `7_gene_list`) %>%
-  filter(!is.na(Smoking.Status)) %>%
-  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
-  ggplot(aes(Log2TN, Gene, fill = Smoking.Status)) +  
-  geom_density_ridges(alpha = 0.3) +
-  xlim(-3, 3) +
-  geom_vline(aes(xintercept = 0)) +
-  labs(subtitle="RNA expression") +
-  theme(plot.subtitle=element_text(size=30),
-        text = element_text(size = 14))
-
-D4 <- d_RNA %>%
-  filter(Gene %in% `7_gene_list`) %>%
-  filter(!is.na(Country.of.Origin)) %>%
-  mutate(Gene = fct_reorder(.f = Gene, .x = Log2TN, .fun = mean)) %>%
-  ggplot(aes(Log2TN, Gene, fill = Country.of.Origin)) +  
-  geom_density_ridges(alpha = 0.3) +
-  xlim(-3, 3) +
-  geom_vline(aes(xintercept = 0)) +
-  labs(subtitle="RNA expression") +
-  theme(plot.subtitle=element_text(size=30),
-        text = element_text(size = 14))
-```
-
-```{r fig.height=18, fig.width=28}
-#Combine plots together
-
-Figure1 <- plot_grid(A1, B1, C1, D1, E1, F1, G1, H1, A3, B3, 
-          labels = c("A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "A3", "B3"), 
-          ncol = 4)
-
-Figure2 <- plot_grid(A2, B2, NULL, NULL, C2, D2, E2, F2, A4, B4, C4, D4,
-          labels = c("A2", "B2","", "", "C2", "D2", "E2", "F2", "A4", "B4", "C4", "D4"), 
-          ncol = 4)
-
-Figure1
-
-Figure2
-```
 
 
 ## 4. Discussion
 
-### 4.1. Answering Questions
-
-Q1. Do other countries on multi-national cohort also show Taiwanese-specific characteristics? (high percentage of never-smokers, EGFR mutations, female, early stage)
-
-A1. (Figure A1-H1) : Compared cohort by cohort, the answer is 'yes' to gender, smoking status and EGFR mutation status(figure A1, B1, D1). Not for LUAD stages, as we can see that early stage patients are dominant in both cohorts(figure C1). On the other hand, by country-wise comparison, those four properties are not Taiwanese-specific. I can see that 'female-dominant' property is Taiwan-specific(figure E1), but all others are not. For smoking status, non-smoker patients also dominate in Vietnamese and Chinese samples(figure F1). Early stage patients also dominate in Vietnam and USA(figure G1), as well as Taiwan. In addition to Taiwan, EGFR mutation samples outnumber WT samples in China too(figure H1). Also, the sample size of countries other than Taiwan, China, Vietnam, and USA were not big enough to compare.
- To sum up, I can say that compared to global trend, the four characteristics are Taiwan-specific, but this conclusion might change in future analysis if the cohort size increases and samples are evenly collected from each country.
-
-
-Q2. Compare gene expressions by cohorts. Are gene expression differences related to TW cohort-specific characteristics?
-
-A2. (Figure A2-F2) : Overall comparison of two cohort's gene expression showed difference in some extent(figure A2). To inspect if the difference was due to the 4 'TW cohort-specific' characteristics, I faceted gene expressions by those 4. If those 4 affected the gene expression, density plots will differ greatly when grouped by those 4 properties. 
- As a result(figure C2-F2), I could found significant differences on log2T/N distribution when the plots were separated by the 4 properties. For example, in figure D2, gene expression between LUAD stages 2A and 3B differ greatly between cohorts. All of the stages combine together to show the overall differences on gene expression between cohorts like figure A2. In conclusion, since all 4 plots showed significant differences on gene expression between cohorts, I can claim that some of the reasons why TW cohort's RNA expressions differ from CPTAC cohort include 'TW cohort having high percentage of EGFR gene mutated, female, early stage, never-smoker patients'. Plus, there might be other properties that make difference between cohorts, which are not addressed in this article.
- While I thoroughly investigated RNA expression data, I could not use protein expression data, because I noticed that log2T/N values differed too much(figure B2). I addressed this problem in "4.2. Imperfections in data munging" part.
-
-
-Q3. Compare gene expressions of 'the 7 cancer related genes'(TP53, KRAS, STK11, EGFR, RB1, KEAP1, BRAF). If genes are over-/under-expressed, is it because of the mutations on certain cancer related genes?
-
-A3. (Figure A3, B3) : For question 3, I filtered the 7 cancer related genes since I had their mutation status information. As a result, I found out that those genes rarely had mutations, except for EGFR and TP53. If existence of mutation directly affected the gene expression, I can say that over-expression of EGFR and TP53 genes(figure B3) are caused by gene mutations. TP53 gene is mainly related to DNA repair, cell cycle regulation, apoptosis, and EGFR gene to cell growth and cell division. Therefore, over-expression of these two genes(figure A3) lead to abnormal growth of cells - cancer.
- The remaining 5 genes did not show significant amount of mutations(figure B3), so I cannot explain the reason of over-/under-expression by this approach. Therefore, to examine correlations directly, I prepared question 4.
-
-
-Q4. Can we find correlations between the 7 genes' over-/under-expressions and patient's properties(gender, smoking status, LUAD stage, country of origin)?
-
-A4. (Figure A4-D4) : I already verified that patients' properties do affect gene expression, but here I inspected 7 specific cancer related genes, and examined the whole data instead of splitting it into two cohorts. 
- As a result, 4 plots that were grouped by each of 4 patient properties showed significant differences on gene expression. In detail, figure C4 showed over-expression on TP53 and EGFR gene because all three categories of smoking status were oriented towards right side(log2T/N>0, T>N).
- However, we have to be careful with distortions innate in 'density' plot. In figure B4, for gene KEAP1, we might think that KEAP1 gene is over-expressed because of stage 4 patient, since sample size seems to be very large. Yet the plot doesn't show that the actual sample size of stage 4 patients are very small, just as shown below.
-```{r}
-d_RNA %>%
-  filter(Gene == "KRAS") %>%
-  filter(!is.na(Stage)) %>% 
-  count(Stage)
+Combine the plots
+```{r, fig.dim = c(10, 10)}
+#Answer 1
+plot_grid(plot1, plot2,
+          ncol = 1)
+#Answer 2
+plot_grid(I, J, K, L,
+          labels = c("A", "B", "C", "D"),
+          ncol = 2)
+#Answer 3
+plot_grid(M, NULL, N, O, P, Q,
+          labels = c("A", "", "B", "C", "D", "E"),
+          ncol = 2)
 ```
 
 
-### 4.2. Imperfections in data munging (related to figure B2)
+### 4.1. Summarize and discuss
 
-To answer questions 2-4 on both transcriptome and proteome level, I had to include plots for both. However, when drawing plots with protein expression data, I found out that log2T/N value range differed greatly between two cohorts, as we can see here:
+To sum up, my aim in this portfolio was to compare two different cohorts which respectively represented Taiwan and world-wide LUAD patients. Here, I focused on four Taiwan-specific characteristics that were importantly addressed in Chen's research and seven cancer related genes that were addressed in Gillette's research. I attempted to compare expressions of these seven genes between cohorts in two levels - RNA and protein -, but in the process, I realized that protein-level log2T/N data of two cohorts were in fact very different from each other(addressed in 4.2. Imperfections in data munging). Therefore I focused on analyzing the difference of RNA-level gene expression between the cohorts.
+
+I asked three questions make a comparison in three steps. 
+
+First question was to verify if the four properties could be the reason for differences between Taiwanese-only cohort and cohort with patients from different nationalities. Here, I chose stacked barplot to visualize the difference of gender, smoking status, LUAD stage, and EGFR mutation status between two cohorts at once. As a result, three categories showed clear discrepancy between the cohorts, whereas LUAD stage category was dominated by early stage patients in both cohorts. In addition, I compared the four properties region-wise, and found out that nonsmoker patients were dominant in Asian countries, not exclusively in Taiwan. However, this conclusion might change in the future, because if the sample size grow in the future, the new samples might represent the whole population better and the resulting distributions might change as well.
+
+I asked second question in order to find out if the 7 genes I picked were unevenly expressed in each cohort. If gene expressions are biased by cohorts, I can inspect deeper to look for any correlation between TW cohort-specific characteristics that are biased between cohorts. Initially, I created density ridge plots and tried to find the gender, smoking status and EGFR mutation status-specific tendency in RNA expressions of genes, but it was impossible without using a calculating tool. Thus in this version of portfolio, I investigated the mean difference between cohorts using ANOVA. As a result, I found difference in mean Log2T/N between cohorts to a mathematically meaningful extent. This deviation might come from any kind of characteristics of the cohort population, but I focused on only 4 categories. The columns that I excluded - age, country of origin, mutation status of other genes and so on - might be very important in classifying patients. Indeed, properties that are relevant enough might be used as a biomarker.
+
+Last question was to find out any relationship between mean differences that I found for each characteristics and deviations I found cohort-wise. Likewise, I first attempted to figure out any relationship between the two without any calculations, but soon utilized the tool, and found out some extent of correlation with two characteristics : smoking status and EGFR mutation status. The significant pairs of mean deviation along smoking status might attribute to variation difference between two cohorts, because nonsmoker population dominated in TW cohort whereas smoker population dominated in CPTAC cohort. This also applies to the situation of EGFR mutation status : statistically important pairs that affected mean difference along EGFR mutation status might also have played a key role in the distribution difference between two cohorts. This result might also change as the cohort size grow and other significant characteristics are found. However, as we get more samples to refer to and categorize, in a more advanced analysis, this hint might proceed and add to discovering some critical index when diagnosing LUAD patients who are distinguished by their nationality, and other relevant features.
+
+### 4.2. Imperfections in data munging 
+
+(related to figure 2D) To answer questions 2 and 3 on both transcriptome and proteome level, I had to include plots for both. However, when drawing plots with protein-level expression data, I found out that **log2T/N value range differed greatly** between two cohorts, as we can see here:
 ```{r}
 range(d_TW_Protein_T$Log2TN, na.rm = TRUE)
 
 range(d_CPTAC_Protein_T$Log2TN, na.rm = TRUE)
 ```
-After inspecting, I found out that normalization methods differed from Chen's and Gillette's research, since TW protein data was normalized by median, and CPTAC protein data was normalized by 'two-component normalization' method. Since I could not convert two-component normalized data into median normalized data, I could only compare protein expression data within each cohorts, not between them.
 
-### 4.3. Sum-up
+After inspecting, I found out that normalization methods differed between Chen's and Gillette's research, since TW protein data was normalized by median, and CPTAC protein data was normalized by 'two-component normalization' method. Since I could not convert two-component normalized data into median normalized data, I failed in attempting to compare protein-level expressions between two cohorts.
 
-In this portfolio, I mainly examined the difference between TW cohort and CPTAC cohort, and inspected in detail by answering 4 questions. As a result, I verified that the 4 Taiwan-specific characteristics of LUAD patients mentioned in Chen's research were prominent compared to CPTAC's multi-national cohort. Those 4 properties *were* responsible for the gene expression differences between cohorts, and I concluded that there might be more implicit differentiating characteristics. I also investigated the correlation of the 7 cancer related genes' over-/under-expressions with presence of somatic muations and other patient properties, and made a careful suggestion: TP53 and EGFR gene mutations might be strongly correlated with over-expression. The 7 genes' expression also seemed to differ due to some patient properties, including gender, smoking status, country of origin, and LUAD stage. In addition, I addressed some precautions when interpreting the visualized data and the problem I encountered with protein expression data too.
+### 4.3. Suggestions for further investigations
+
+For further investigations, I would attempt to start with GSEA(gene set enrichment analysis) of TW cohort and CPTAC cohort. Using gprofiler, I can create a set of genes that are most prominent in each cohorts, and find related biological pathways. Then, I could make a comparison between two cohorts. Also, I would attempt exploring more columns of the merged dataset I made, because here I did not focus on various **types** of mutations of the 25 genes I initially selected. Are there any strong relationships between certain mutation types and over-/under-expressions of genes? Are some of the most correlated genes in each cohorts involved in certain pathways? What genes and mutations of genes strongly correlate to LUAD stages? I can ask a variety of questions for exploring information that I didn't focus in this portfolio. 
+I tried my best to pipe(%>%) as long as I can, but pre-processing of data would have room to improve, as I have assigned excessive number of objects merely to trim down and merge the data of only two cohorts.
 
 ## 5. Resource
 

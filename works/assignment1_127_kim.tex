@@ -1,0 +1,1831 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Assignment1\_127\_kim},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Assignment1\_127\_kim}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\hypertarget{investigating-the-difference-between-taiwan-cohortchen-et-al.-2020-and-cptac-cohortgillette-et-al.-2020-patients-gene-expression-on-transcriptome-and-proteome-level.}{%
+\section{Investigating the difference between Taiwan cohort(Chen et al.,
+2020) and CPTAC cohort(Gillette et al., 2020) patients' gene expression
+on transcriptome and proteome
+level.}\label{investigating-the-difference-between-taiwan-cohortchen-et-al.-2020-and-cptac-cohortgillette-et-al.-2020-patients-gene-expression-on-transcriptome-and-proteome-level.}}
+
+\hypertarget{index}{%
+\subsection{Index}\label{index}}
+
+\emph{1. Introduction} \emph{2. Preparing the data} \emph{3.
+Visualization} \emph{4. Discussion}
+
+\hypertarget{introduction}{%
+\subsection{1. Introduction}\label{introduction}}
+
+\hypertarget{overview}{%
+\subsubsection{1.1. Overview}\label{overview}}
+
+Chen's research was based on Taiwanese LUAD patients' samples, and the
+cohort showed its unique patterns, including high proportion of
+never-smokers, female, early stage LUAD, and many more. Comparing to
+western region biased TCGA cohort, the research indicated the unique
+trends shown from each cohorts.
+
+Here, I am going to investigate the different trends of gene expression
+between Taiwan cohort and another cohort, on transcriptome and proteome
+level. To compare with Taiwan cohort(Chen et al., 2020), I selected the
+most recent and multi-national LUAD research(Gillette et al., 2020) in
+NCI(National Cancer Institute) portal which used CPTAC(Clinical
+Proteomic Tumor Analysis Consortium) project data.
+
+Since the CPTAC cohort data includes multi-national patients, it would
+show the global trend of gene expressions, and therefore comparing it
+with Taiwan cohort will identify Taiwan-specific characteristics to
+overall worldwide trend.
+
+\hypertarget{detailed-objectives}{%
+\subsubsection{1.2. Detailed objectives}\label{detailed-objectives}}
+
+First, I will examine if 4 unique characteristics of Taiwan cohort
+mentioned in Chen's research - high proportion of nonsmokers, EGFR
+mutations, females, early stage patients - are also found in CPTAC
+multi-national cohort.
+
+Next, I will compare RNA/protein-level gene expressions of the 7
+important `cancer related genes'(TP53, KRAS, STK11, EGFR, RB1, KEAP1,
+BRAF - addressed in Gillette's research) between two cohorts. These
+genes are significantly mutated genes with Benjamini Hochberg (BH) FDR
+\textless{} 0.01, visualized with the oncoplot which depicts mutually
+exclusive driver oncogene somatic mutations(Figure 1D in Gillette's
+research).
+
+Then I will figure out if the gene expression of 7 genes correlate with
+the 4 properties(smoking status, EGFR mutation, gender, LUAD stage) in
+each cohort by ANOVA, and discuss what the results mean.
+
+These objectives can be summarized into 3 questions :
+
+\textbf{Q1. Do other countries on multi-national cohort also show 4
+Taiwan cohort-specific characteristics(high percentage of nonsmokers,
+EGFR mutations, female, early stage)?}
+
+\textbf{Q2. Compare gene expressions of `the 7 cancer related
+genes'(TP53, KRAS, STK11, EGFR, RB1, KEAP1, BRAF) by cohorts.}
+
+\textbf{Q3. Do gene expression differences relate to Taiwan
+cohort-specific characteristics?}
+
+\hypertarget{preparing-the-data}{%
+\subsection{2. Preparing the data}\label{preparing-the-data}}
+
+Let's load the data from both of the researches and cut out any
+unnecessary entries from the dataframes. Also, from now on, `TW' refers
+to the Taiwan cohort research(Chen et al., 2020), and `CPTAC' refers to
+the CPTAC cohort research(Gillette et al., 2020).
+
+\hypertarget{load-the-data}{%
+\subsubsection{2.1. Load the data}\label{load-the-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Load the packages and data}
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## 다음의 패키지를 부착합니다: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
+\end{verbatim}
+
+\begin{verbatim}
+## v tibble  3.1.4     v purrr   0.3.4
+## v tidyr   1.1.3     v stringr 1.4.0
+## v readr   2.0.1     v forcats 0.5.1
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(janitor)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## 다음의 패키지를 부착합니다: 'janitor'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     chisq.test, fisher.test
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(magrittr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## 다음의 패키지를 부착합니다: 'magrittr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     set_names
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:tidyr':
+## 
+##     extract
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(cowplot)}
+
+\CommentTok{\#Load Taiwan cohort\textquotesingle{}s clinical data(patient\_info), RNA expression data(RNA), and protein expression data(Protein).}
+\NormalTok{d\_TW\_patient\_info\_0 }\OtherTok{=} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{\textquotesingle{}./TW{-}mmc1.xlsx\textquotesingle{}}\NormalTok{, }\AttributeTok{sheet=}\DecValTok{2}\NormalTok{, }\AttributeTok{na=}\StringTok{"NA"}\NormalTok{)}
+\NormalTok{d\_TW\_RNA\_0 }\OtherTok{=} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{\textquotesingle{}./TW{-}mmc1.xlsx\textquotesingle{}}\NormalTok{, }\AttributeTok{sheet=}\DecValTok{5}\NormalTok{, }\AttributeTok{na=}\StringTok{"NA"}\NormalTok{)}
+\NormalTok{d\_TW\_Protein\_0 }\OtherTok{=} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{\textquotesingle{}./TW{-}mmc1.xlsx\textquotesingle{}}\NormalTok{, }\AttributeTok{sheet=}\DecValTok{6}\NormalTok{, }\AttributeTok{na=}\StringTok{"NA"}\NormalTok{)}
+
+\CommentTok{\#Load the data for CPTAC cohort.}
+\NormalTok{d\_CPTAC\_patient\_info\_0 }\OtherTok{=} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{\textquotesingle{}./CPTAC{-}mmc1.xlsx\textquotesingle{}}\NormalTok{, }\AttributeTok{sheet=}\DecValTok{2}\NormalTok{, }\AttributeTok{na=}\StringTok{"NA"}\NormalTok{)}
+\NormalTok{d\_CPTAC\_RNA\_0 }\OtherTok{=} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{\textquotesingle{}./CPTAC{-}mmc2.xlsx\textquotesingle{}}\NormalTok{, }\AttributeTok{sheet=}\DecValTok{6}\NormalTok{, }\AttributeTok{na=}\StringTok{"NA"}\NormalTok{, }\AttributeTok{skip =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## New names:
+## * id -> id...1
+## * id -> id...6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_CPTAC\_Protein\_0 }\OtherTok{=} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{\textquotesingle{}./CPTAC{-}mmc3.xlsx\textquotesingle{}}\NormalTok{, }\AttributeTok{sheet=}\DecValTok{2}\NormalTok{, }\AttributeTok{na=}\StringTok{"NA"}\NormalTok{, }\AttributeTok{skip =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## New names:
+## * id -> id...1
+## * id -> id...17
+\end{verbatim}
+
+\hypertarget{cut-out-and-merge-the-data}{%
+\subsubsection{2.2. Cut out and merge the
+data}\label{cut-out-and-merge-the-data}}
+
+We will cut out redundant information and merge the necessary
+information to prepare the data for visualization. Here, we use the 25
+`cancer related genes' from the Cancer Gene Census (COSMIC) portal,
+which addressed in Chen's research(Table S1J and Figure 1A) and 7 cancer
+related genes addressed in Gillette's research.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Load the gene list from table S1J in TW research.}
+\NormalTok{d\_25\_gene\_list }\OtherTok{=} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{\textquotesingle{}./TW{-}mmc1.xlsx\textquotesingle{}}\NormalTok{, }\AttributeTok{sheet=}\DecValTok{11}\NormalTok{, }\AttributeTok{na=}\StringTok{"NA"}\NormalTok{)}
+
+\CommentTok{\#These are 25 cancer related genes, selected by COSMIC. }
+\NormalTok{gene\_list\_1 }\OtherTok{\textless{}{-}}\NormalTok{ d\_25\_gene\_list }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(Hugo\_Symbol) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pull}\NormalTok{()}
+
+\CommentTok{\#Include 6 genes, selected in Gillette\textquotesingle{}s research}
+\NormalTok{gene\_list }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"STK11"}\NormalTok{, }\StringTok{"KEAP1"}\NormalTok{, }\StringTok{"BRAF"}\NormalTok{, gene\_list\_1)}
+
+\CommentTok{\#Load mutation data for TW cohort, and filter 7 genes}
+\NormalTok{d\_7\_gene\_mut }\OtherTok{=} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{\textquotesingle{}./TW{-}mmc1.xlsx\textquotesingle{}}\NormalTok{, }\AttributeTok{sheet=}\DecValTok{4}\NormalTok{, }\AttributeTok{na=}\StringTok{"NA"}\NormalTok{, }\AttributeTok{skip =} \DecValTok{1}\NormalTok{)}
+\NormalTok{d\_7\_gene\_mut\_1 }\OtherTok{\textless{}{-}}\NormalTok{ d\_7\_gene\_mut }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Gene }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"TP53"}\NormalTok{, }\StringTok{"KRAS"}\NormalTok{, }\StringTok{"STK11"}\NormalTok{, }\StringTok{"KEAP1"}\NormalTok{, }\StringTok{"BRAF"}\NormalTok{, }\StringTok{"RB1"}\NormalTok{, }\StringTok{"EGFR"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{t}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{row\_to\_names}\NormalTok{(}\AttributeTok{row\_number =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{TP53.mutation.status =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(TP53), }\StringTok{"0"}\NormalTok{, }\StringTok{"1"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{KRAS.mutation.status =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(KRAS), }\StringTok{"0"}\NormalTok{, }\StringTok{"1"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{STK11.mutation.status =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(STK11), }\StringTok{"0"}\NormalTok{, }\StringTok{"1"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{RB1.mutation.status =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(RB1), }\StringTok{"0"}\NormalTok{, }\StringTok{"1"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{BRAF.mutation.status =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(BRAF), }\StringTok{"0"}\NormalTok{, }\StringTok{"1"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{KEAP1.mutation.status =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(KEAP1), }\StringTok{"0"}\NormalTok{, }\StringTok{"1"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{EGFR.mutation.status =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(EGFR), }\StringTok{"0"}\NormalTok{, }\StringTok{"1"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{TP53.mutation =}\NormalTok{ TP53) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{KRAS.mutation =}\NormalTok{ KRAS) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{STK11.mutation =}\NormalTok{ STK11) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{RB1.mutation =}\NormalTok{ RB1) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{BRAF.mutation =}\NormalTok{ BRAF) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{KEAP1.mutation =}\NormalTok{ KEAP1) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{EGFR.mutation =}\NormalTok{ EGFR)}
+
+\StringTok{"7\_gene\_list"} \OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"TP53"}\NormalTok{, }\StringTok{"KRAS"}\NormalTok{, }\StringTok{"STK11"}\NormalTok{, }\StringTok{"KEAP1"}\NormalTok{, }\StringTok{"BRAF"}\NormalTok{, }\StringTok{"RB1"}\NormalTok{, }\StringTok{"EGFR"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{tw-data}{%
+\paragraph{2.2.1. TW data}\label{tw-data}}
+
+First, we will only select 25 cancer related genes from RNA, protein
+data frame. Next, we will merge the patient information(gender, age,
+smoking status, cancer stage, EGFR status) to RNA and protein expression
+data. We also flip the rows and columns around, so each rows will
+indicate patients, and the newly added information will become new
+columns.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_TW\_patient\_info }\OtherTok{\textless{}{-}}\NormalTok{ d\_TW\_patient\_info\_0 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Proteome\_Batch, }\StringTok{\textasciigrave{}}\AttributeTok{Histology Type}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{Primary Tumor Location}\StringTok{\textasciigrave{}}\NormalTok{, EGFR\_Status))}
+
+\CommentTok{\# RNA data}
+\NormalTok{d\_TW\_RNA }\OtherTok{\textless{}{-}}\NormalTok{ d\_TW\_RNA\_0 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(gene }\SpecialCharTok{\%in\%}\NormalTok{ gene\_list) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(ensembl\_gene\_id, Median)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{remove\_rownames}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var =} \StringTok{\textquotesingle{}gene\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{t}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{merge}\NormalTok{(d\_TW\_patient\_info, }\AttributeTok{by.x =} \DecValTok{0}\NormalTok{, }\AttributeTok{by.y =} \StringTok{"ID"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#Merge data}
+  \FunctionTok{merge}\NormalTok{(d\_7\_gene\_mut\_1, }\AttributeTok{by.x =} \StringTok{"Row.names"}\NormalTok{, }\AttributeTok{by.y =} \DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{ID =}\NormalTok{ Row.names) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Country.of.Origin =} \StringTok{"Taiwan"}\NormalTok{)}
+  
+\CommentTok{\# Protein data}
+\NormalTok{d\_TW\_Protein }\OtherTok{\textless{}{-}}\NormalTok{ d\_TW\_Protein\_0 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Gene }\SpecialCharTok{\%in\%}\NormalTok{ gene\_list) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Accession, Protein)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{remove\_rownames}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var =} \StringTok{\textquotesingle{}Gene\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{t}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{merge}\NormalTok{(d\_TW\_patient\_info, }\AttributeTok{by.x =} \DecValTok{0}\NormalTok{, }\AttributeTok{by.y =} \StringTok{"ID"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#Merge data}
+  \FunctionTok{merge}\NormalTok{(d\_7\_gene\_mut\_1, }\AttributeTok{by.x =} \StringTok{"Row.names"}\NormalTok{, }\AttributeTok{by.y =} \DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{ID =}\NormalTok{ Row.names) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Country.of.Origin =} \StringTok{"Taiwan"}\NormalTok{)}
+
+\CommentTok{\#Note: 3 genes are missing in protein data, and we can check them by the code below.}
+\FunctionTok{setdiff}\NormalTok{(gene\_list, d\_TW\_Protein\_0 }\SpecialCharTok{\%\textgreater{}\%}
+          \FunctionTok{filter}\NormalTok{(Gene }\SpecialCharTok{\%in\%}\NormalTok{ gene\_list) }\SpecialCharTok{\%\textgreater{}\%} 
+          \FunctionTok{select}\NormalTok{(Gene) }\SpecialCharTok{\%\textgreater{}\%} 
+          \FunctionTok{pull}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "ATP2B3" "TET1"   "USP6"
+\end{verbatim}
+
+\hypertarget{cptac-data}{%
+\paragraph{2.2.2. CPTAC data}\label{cptac-data}}
+
+First, we will cut out redundant information in CPTAC data frames, and
+only leave patient ID, smoking status, country of origin, age, gender,
+EGFR mutation status, and gene abundance information for the 25 genes.
+Also, in CPTAC data, it \emph{is} normalized and log2-transformed, but
+the tumor and NAT sample data is split. Therefore, we have to calculate
+the log2T/N manually.
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\tightlist
+\item
+  RNA data
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Subsetting data for 28 genes, and flip rows and columns around.}
+\NormalTok{d\_CPTAC\_RNA }\OtherTok{\textless{}{-}}\NormalTok{ d\_CPTAC\_RNA\_0 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(geneSymbol }\SpecialCharTok{\%in\%}\NormalTok{ gene\_list }\SpecialCharTok{|}\NormalTok{ id...}\DecValTok{1} \SpecialCharTok{==} \StringTok{"Type"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(id...}\DecValTok{1}\NormalTok{, gene\_id, gene\_type, length, id...}\DecValTok{6}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{remove\_rownames}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var =} \StringTok{\textquotesingle{}geneSymbol\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{t}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.data.frame}\NormalTok{()}
+
+\CommentTok{\#Reorder the row names numerically, but first remove the characters.}
+\FunctionTok{row.names}\NormalTok{(d\_CPTAC\_RNA) }\OtherTok{\textless{}{-}} \FunctionTok{row.names}\NormalTok{(d\_CPTAC\_RNA) }\SpecialCharTok{\%\textless{}\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"C3L."}\NormalTok{, }\StringTok{""}\NormalTok{,.) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"C3N."}\NormalTok{, }\StringTok{""}\NormalTok{,.)}
+
+\CommentTok{\#Simply subtract NAT from Tumor to get log2T/N(Values are already log2{-}transformed). First divide into Tumor and NAT data frames, and arrange rows numerically.}
+\NormalTok{d1 }\OtherTok{\textless{}{-}}\NormalTok{ d\_CPTAC\_RNA }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(na }\SpecialCharTok{==} \StringTok{"Tumor"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{na)}
+
+\NormalTok{d1}\SpecialCharTok{$}\NormalTok{index }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{row.names}\NormalTok{(d1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 강제형변환에 의해 생성된 NA 입니다
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d1 }\OtherTok{\textless{}{-}}\NormalTok{ d1[}\FunctionTok{order}\NormalTok{(d1}\SpecialCharTok{$}\NormalTok{index), ]}
+
+\NormalTok{d2 }\OtherTok{\textless{}{-}}\NormalTok{ d\_CPTAC\_RNA }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(na }\SpecialCharTok{==} \StringTok{"NAT"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{na)}
+
+\FunctionTok{row.names}\NormalTok{(d2) }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{.N"}\NormalTok{, }\StringTok{""}\NormalTok{, }\FunctionTok{row.names}\NormalTok{(d2)) }\CommentTok{\#Remove the character ".N"}
+\NormalTok{d2}\SpecialCharTok{$}\NormalTok{index }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{row.names}\NormalTok{(d2))}
+\NormalTok{d2 }\OtherTok{\textless{}{-}}\NormalTok{ d2[}\FunctionTok{order}\NormalTok{(d2}\SpecialCharTok{$}\NormalTok{index), ] }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{index)}
+
+\CommentTok{\#Delete 9 rows that do not overlap in d1(110 rows) and d2(101 rows)}
+\NormalTok{d1 }\OtherTok{\textless{}{-}}\NormalTok{ d1 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{subset}\NormalTok{(}\FunctionTok{rownames}\NormalTok{(d1) }\SpecialCharTok{\%in\%} \FunctionTok{intersect}\NormalTok{(}\FunctionTok{row.names}\NormalTok{(d1), }\FunctionTok{row.names}\NormalTok{(d2))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{index)}
+
+\CommentTok{\#Subtract 2 data frames to get log2T/N values, but first convert all the non{-}numeric values into numeric.}
+\NormalTok{d1[] }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(d1, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(x)))}
+\NormalTok{d2[] }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(d2, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(x)))}
+\NormalTok{d\_CPTAC\_RNA }\OtherTok{\textless{}{-}}\NormalTok{ d1}\SpecialCharTok{{-}}\NormalTok{d2}
+
+\CommentTok{\#Merge patient\_info.}
+\NormalTok{d\_CPTAC\_patient\_info\_0 }\SpecialCharTok{\%\textless{}\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Type }\SpecialCharTok{==} \StringTok{"Tumor"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(Sample.ID, Smoking.Status, Stage, Country.of.Origin, Age, Gender, }\FunctionTok{c}\NormalTok{(}\DecValTok{46}\SpecialCharTok{:}\DecValTok{52}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{37}\SpecialCharTok{:}\DecValTok{43}\NormalTok{))}
+
+\NormalTok{d\_CPTAC\_patient\_info\_0}\SpecialCharTok{$}\NormalTok{Sample.ID }\SpecialCharTok{\%\textless{}\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"C3L."}\NormalTok{, }\StringTok{""}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"C3N."}\NormalTok{, }\StringTok{""}\NormalTok{, .)}
+
+\NormalTok{d\_CPTAC\_RNA }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(}\AttributeTok{x =}\NormalTok{ d\_CPTAC\_RNA, }\AttributeTok{y =}\NormalTok{ d\_CPTAC\_patient\_info\_0, }\AttributeTok{by.x =} \DecValTok{0}\NormalTok{, }\AttributeTok{by.y =} \StringTok{"Sample.ID"}\NormalTok{)}
+
+\CommentTok{\#Mutation status columns should be \textquotesingle{}character\textquotesingle{} vectors.}
+
+\NormalTok{d\_CPTAC\_RNA}\SpecialCharTok{$}\NormalTok{TP53.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\NormalTok{d\_CPTAC\_RNA}\SpecialCharTok{$}\NormalTok{EGFR.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\NormalTok{d\_CPTAC\_RNA}\SpecialCharTok{$}\NormalTok{STK11.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\NormalTok{d\_CPTAC\_RNA}\SpecialCharTok{$}\NormalTok{RB1.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\NormalTok{d\_CPTAC\_RNA}\SpecialCharTok{$}\NormalTok{BRAF.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\NormalTok{d\_CPTAC\_RNA}\SpecialCharTok{$}\NormalTok{KRAS.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\NormalTok{d\_CPTAC\_RNA}\SpecialCharTok{$}\NormalTok{KEAP1.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Protein data
+\end{enumerate}
+
+Repeat the process for protein data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_CPTAC\_Protein }\OtherTok{\textless{}{-}}\NormalTok{ d\_CPTAC\_Protein\_0 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(GeneSymbol }\SpecialCharTok{\%in\%}\NormalTok{ gene\_list }\SpecialCharTok{|}\NormalTok{ id...}\DecValTok{1} \SpecialCharTok{==} \StringTok{"Type"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{), }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(id...}\DecValTok{17}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#16th and 17th values in GeneSymbol column are identical(both are SLC34A2), because they make two different isoforms(a, b). Let\textquotesingle{}s label them.}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{GeneSymbol =} \FunctionTok{replace}\NormalTok{(GeneSymbol, C3L}\FloatTok{.00263} \SpecialCharTok{==} \SpecialCharTok{{-}}\FloatTok{3.7624}\NormalTok{, }\StringTok{\textquotesingle{}SLC34A2{-}a\textquotesingle{}}\NormalTok{), }\AttributeTok{GeneSymbol =} \FunctionTok{replace}\NormalTok{(GeneSymbol, C3L.}\FloatTok{01890.}\NormalTok{N }\SpecialCharTok{==} \FloatTok{1.1266}\NormalTok{, }\StringTok{\textquotesingle{}SLC34A2{-}b\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{remove\_rownames}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{column\_to\_rownames}\NormalTok{(}\AttributeTok{var =} \StringTok{\textquotesingle{}GeneSymbol\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{t}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.data.frame}\NormalTok{()}
+
+\CommentTok{\#Divide into Tumor and NAT data frames, and remove the character ".N".}
+
+\NormalTok{d3 }\OtherTok{\textless{}{-}}\NormalTok{ d\_CPTAC\_Protein }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(na }\SpecialCharTok{==} \StringTok{"Tumor"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{na)}
+
+\NormalTok{d4 }\OtherTok{\textless{}{-}}\NormalTok{ d\_CPTAC\_Protein }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(na }\SpecialCharTok{==} \StringTok{"NAT"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{na)}
+
+\CommentTok{\#Delete 9 rows that do not overlap in d1(110 rows) and d2(101 rows).}
+
+\FunctionTok{row.names}\NormalTok{(d4) }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{.N"}\NormalTok{, }\StringTok{""}\NormalTok{, }\FunctionTok{row.names}\NormalTok{(d4)) }
+
+\NormalTok{d3 }\OtherTok{\textless{}{-}}\NormalTok{ d3 }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{subset}\NormalTok{(}\FunctionTok{rownames}\NormalTok{(d3) }\SpecialCharTok{\%in\%} \FunctionTok{intersect}\NormalTok{(}\FunctionTok{row.names}\NormalTok{(d3), }\FunctionTok{row.names}\NormalTok{(d4)))}
+
+\CommentTok{\#Subtract to get log2T/N values.}
+\NormalTok{d3[] }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(d3, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(x)))}
+\NormalTok{d4[] }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(d4, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(x)))}
+\NormalTok{d\_CPTAC\_Protein }\OtherTok{\textless{}{-}}\NormalTok{ d3 }\SpecialCharTok{{-}}\NormalTok{ d4}
+
+
+\CommentTok{\#Merge with patient\_info.}
+\FunctionTok{row.names}\NormalTok{(d\_CPTAC\_Protein) }\OtherTok{\textless{}{-}} \FunctionTok{row.names}\NormalTok{(d\_CPTAC\_Protein) }\SpecialCharTok{\%\textless{}\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"C3L."}\NormalTok{, }\StringTok{""}\NormalTok{,.) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"C3N."}\NormalTok{, }\StringTok{""}\NormalTok{,.)}
+
+\NormalTok{d\_CPTAC\_Protein }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(}\AttributeTok{x =}\NormalTok{ d\_CPTAC\_Protein, }\AttributeTok{y =}\NormalTok{ d\_CPTAC\_patient\_info\_0, }\AttributeTok{by.x =} \DecValTok{0}\NormalTok{, }\AttributeTok{by.y =} \StringTok{"Sample.ID"}\NormalTok{)}
+
+\CommentTok{\#Mutation status columns should be \textquotesingle{}character\textquotesingle{} vectors.}
+
+\NormalTok{d\_CPTAC\_Protein}\SpecialCharTok{$}\NormalTok{TP53.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\NormalTok{d\_CPTAC\_Protein}\SpecialCharTok{$}\NormalTok{EGFR.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\NormalTok{d\_CPTAC\_Protein}\SpecialCharTok{$}\NormalTok{STK11.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\NormalTok{d\_CPTAC\_Protein}\SpecialCharTok{$}\NormalTok{RB1.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\NormalTok{d\_CPTAC\_Protein}\SpecialCharTok{$}\NormalTok{BRAF.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\NormalTok{d\_CPTAC\_Protein}\SpecialCharTok{$}\NormalTok{KRAS.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\NormalTok{d\_CPTAC\_Protein}\SpecialCharTok{$}\NormalTok{KEAP1.mutation.status }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{as.character}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{visualization}{%
+\subsection{3. Visualization}\label{visualization}}
+
+\hypertarget{make-tidier}{%
+\subsubsection{3.1. Make tidier}\label{make-tidier}}
+
+25 genes are all in the columns and it's too long. Make it tidier for
+visualization by pivoting. Label tidy data as '\_T'.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Make gene list of protein data (3 genes missing) for pivoting.}
+\NormalTok{gene\_list\_p\_TW }\OtherTok{\textless{}{-}} \FunctionTok{intersect}\NormalTok{(gene\_list,  d\_TW\_Protein\_0 }\SpecialCharTok{\%\textgreater{}\%}
+                                 \FunctionTok{filter}\NormalTok{(Gene }\SpecialCharTok{\%in\%}\NormalTok{ gene\_list) }\SpecialCharTok{\%\textgreater{}\%} 
+                                 \FunctionTok{select}\NormalTok{(Gene) }\SpecialCharTok{\%\textgreater{}\%} 
+                                 \FunctionTok{pull}\NormalTok{())}
+
+\CommentTok{\#Make gene list of protein data for pivoting.}
+\NormalTok{gene\_list\_p\_CPTAC }\OtherTok{\textless{}{-}}\NormalTok{ d\_CPTAC\_Protein }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(Row.names, }\DecValTok{24}\SpecialCharTok{:}\DecValTok{42}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{colnames}\NormalTok{()}
+
+\CommentTok{\#Make tidier.}
+\NormalTok{d\_TW\_RNA\_T }\OtherTok{\textless{}{-}}\NormalTok{ d\_TW\_RNA }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(gene\_list, }\AttributeTok{names\_to =} \StringTok{"Gene"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Log2TN"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Smoking.Status =} \StringTok{\textasciigrave{}}\AttributeTok{Smoking Status}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Note: Using an external vector in selections is ambiguous.
+## i Use `all_of(gene_list)` instead of `gene_list` to silence this message.
+## i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+## This message is displayed once per session.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_TW\_Protein\_T }\OtherTok{\textless{}{-}}\NormalTok{ d\_TW\_Protein }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(gene\_list\_p\_TW, }\AttributeTok{names\_to =} \StringTok{"Gene"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Log2TN"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Smoking.Status =} \StringTok{\textasciigrave{}}\AttributeTok{Smoking Status}\StringTok{\textasciigrave{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Note: Using an external vector in selections is ambiguous.
+## i Use `all_of(gene_list_p_TW)` instead of `gene_list_p_TW` to silence this message.
+## i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+## This message is displayed once per session.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_CPTAC\_RNA\_T }\OtherTok{\textless{}{-}}\NormalTok{ d\_CPTAC\_RNA }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(gene\_list, }\AttributeTok{names\_to =} \StringTok{"Gene"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Log2TN"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{ID =}\NormalTok{ Row.names)}
+
+\NormalTok{d\_CPTAC\_Protein\_T }\OtherTok{\textless{}{-}}\NormalTok{ d\_CPTAC\_Protein }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(gene\_list\_p\_CPTAC, }\AttributeTok{names\_to =} \StringTok{"Gene"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Log2TN"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{ID =}\NormalTok{ Row.names)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Note: Using an external vector in selections is ambiguous.
+## i Use `all_of(gene_list_p_CPTAC)` instead of `gene_list_p_CPTAC` to silence this message.
+## i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+## This message is displayed once per session.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Bind them together for easy handling. Add a column to distinguish them.}
+\NormalTok{d\_RNA }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(d\_TW\_RNA\_T, d\_CPTAC\_RNA\_T)}
+
+\NormalTok{d\_RNA }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Cohort =} \FunctionTok{ifelse}\NormalTok{(Country.of.Origin }\SpecialCharTok{==} \StringTok{"Taiwan"}\NormalTok{, }\StringTok{"Taiwan"}\NormalTok{, }\StringTok{"Multi{-}nation"}\NormalTok{))}
+
+\NormalTok{d\_Protein }\OtherTok{\textless{}{-}} \FunctionTok{bind\_rows}\NormalTok{(d\_TW\_Protein\_T, d\_CPTAC\_Protein\_T)}
+
+\NormalTok{d\_Protein }\SpecialCharTok{\%\textless{}\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Cohort =} \FunctionTok{ifelse}\NormalTok{(Country.of.Origin }\SpecialCharTok{==} \StringTok{"Taiwan"}\NormalTok{, }\StringTok{"Taiwan"}\NormalTok{, }\StringTok{"Multi{-}nation"}\NormalTok{))}
+
+\CommentTok{\#Modify some column(gender, smoking status, stage) values into same formats. Ex) Gender = Female, Male, female, male {-}{-}\textgreater{} female, male)}
+
+\NormalTok{d\_RNA}\SpecialCharTok{$}\NormalTok{Gender }\SpecialCharTok{\%\textless{}\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"Female"}\NormalTok{, }\StringTok{"female"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"Male"}\NormalTok{, }\StringTok{"male"}\NormalTok{, .)}
+
+\NormalTok{d\_RNA}\SpecialCharTok{$}\NormalTok{Smoking.Status }\SpecialCharTok{\%\textless{}\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"non{-}smoker"}\NormalTok{, }\StringTok{"Nonsmoke"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"smoker"}\NormalTok{, }\StringTok{"Current\_Smoker"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"Ex{-}Current\_Smoker"}\NormalTok{, }\StringTok{"Ex\_Smoker"}\NormalTok{, .)}
+
+\NormalTok{d\_RNA}\SpecialCharTok{$}\NormalTok{Stage }\SpecialCharTok{\%\textless{}\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IIIA"}\NormalTok{, }\StringTok{"3A"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IIA"}\NormalTok{, }\StringTok{"2A"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IA"}\NormalTok{, }\StringTok{"1A"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IIIB"}\NormalTok{, }\StringTok{"3B"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IIB"}\NormalTok{, }\StringTok{"2B"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IB"}\NormalTok{, }\StringTok{"1B"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IV"}\NormalTok{, }\StringTok{"4"}\NormalTok{, .)}
+
+
+\NormalTok{d\_Protein}\SpecialCharTok{$}\NormalTok{Gender }\SpecialCharTok{\%\textless{}\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"Female"}\NormalTok{, }\StringTok{"female"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"Male"}\NormalTok{, }\StringTok{"male"}\NormalTok{, .)}
+
+\NormalTok{d\_Protein}\SpecialCharTok{$}\NormalTok{Smoking.Status }\SpecialCharTok{\%\textless{}\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"non{-}smoker"}\NormalTok{, }\StringTok{"Non\_smoke"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"smoker"}\NormalTok{, }\StringTok{"Current\_Smoker"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"Ex{-}Current\_Smoker"}\NormalTok{, }\StringTok{"Ex\_Smoker"}\NormalTok{, .)}
+
+
+\NormalTok{d\_Protein}\SpecialCharTok{$}\NormalTok{Stage }\SpecialCharTok{\%\textless{}\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IIIA"}\NormalTok{, }\StringTok{"3A"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IIA"}\NormalTok{, }\StringTok{"2A"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IA"}\NormalTok{, }\StringTok{"1A"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IIIB"}\NormalTok{, }\StringTok{"3B"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IIB"}\NormalTok{, }\StringTok{"2B"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IB"}\NormalTok{, }\StringTok{"1B"}\NormalTok{, .) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{gsub}\NormalTok{(}\StringTok{"IV"}\NormalTok{, }\StringTok{"4"}\NormalTok{, .)}
+
+\CommentTok{\#Let\textquotesingle{}s add a column for \textquotesingle{}region of origin\textquotesingle{} for later use.}
+
+\NormalTok{d\_RNA }\SpecialCharTok{\%\textless{}\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Region.of.Origin =} \FunctionTok{ifelse}\NormalTok{(Country.of.Origin }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"Taiwan"}\NormalTok{, }\StringTok{"china"}\NormalTok{, }\StringTok{"vietnam"}\NormalTok{), }\StringTok{"Asian"}\NormalTok{, }\StringTok{"Western"}\NormalTok{))}
+
+\NormalTok{d\_Protein }\SpecialCharTok{\%\textless{}\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Region.of.Origin =} \FunctionTok{ifelse}\NormalTok{(Country.of.Origin }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"Taiwan"}\NormalTok{, }\StringTok{"china"}\NormalTok{, }\StringTok{"vietnam"}\NormalTok{), }\StringTok{"Asian"}\NormalTok{, }\StringTok{"Western"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#My tidy data}
+
+\FunctionTok{head}\NormalTok{(d\_RNA)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 24
+##   ID       Gender   Age Smoking.Status Stage EGFR.mutation     TP53.mutation
+##   <I<chr>> <chr>  <dbl> <chr>          <chr> <chr>             <chr>        
+## 1 P002     male    73.8 Nonsmoke       1B    nonsynonymous_SNV stopgain     
+## 2 P002     male    73.8 Nonsmoke       1B    nonsynonymous_SNV stopgain     
+## 3 P002     male    73.8 Nonsmoke       1B    nonsynonymous_SNV stopgain     
+## 4 P002     male    73.8 Nonsmoke       1B    nonsynonymous_SNV stopgain     
+## 5 P002     male    73.8 Nonsmoke       1B    nonsynonymous_SNV stopgain     
+## 6 P002     male    73.8 Nonsmoke       1B    nonsynonymous_SNV stopgain     
+## # ... with 17 more variables: KRAS.mutation <chr>, RB1.mutation <chr>,
+## #   KEAP1.mutation <chr>, BRAF.mutation <chr>, STK11.mutation <chr>,
+## #   TP53.mutation.status <chr>, KRAS.mutation.status <chr>,
+## #   STK11.mutation.status <chr>, RB1.mutation.status <chr>,
+## #   BRAF.mutation.status <chr>, KEAP1.mutation.status <chr>,
+## #   EGFR.mutation.status <chr>, Country.of.Origin <chr>, Gene <chr>,
+## #   Log2TN <dbl>, Cohort <chr>, Region.of.Origin <chr>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(d\_Protein)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 24
+##   ID       Gender   Age Smoking.Status Stage EGFR.mutation     TP53.mutation
+##   <I<chr>> <chr>  <dbl> <chr>          <chr> <chr>             <chr>        
+## 1 P002     male    73.8 Nonsmoke       1B    nonsynonymous_SNV stopgain     
+## 2 P002     male    73.8 Nonsmoke       1B    nonsynonymous_SNV stopgain     
+## 3 P002     male    73.8 Nonsmoke       1B    nonsynonymous_SNV stopgain     
+## 4 P002     male    73.8 Nonsmoke       1B    nonsynonymous_SNV stopgain     
+## 5 P002     male    73.8 Nonsmoke       1B    nonsynonymous_SNV stopgain     
+## 6 P002     male    73.8 Nonsmoke       1B    nonsynonymous_SNV stopgain     
+## # ... with 17 more variables: KRAS.mutation <chr>, RB1.mutation <chr>,
+## #   KEAP1.mutation <chr>, BRAF.mutation <chr>, STK11.mutation <chr>,
+## #   TP53.mutation.status <chr>, KRAS.mutation.status <chr>,
+## #   STK11.mutation.status <chr>, RB1.mutation.status <chr>,
+## #   BRAF.mutation.status <chr>, KEAP1.mutation.status <chr>,
+## #   EGFR.mutation.status <chr>, Country.of.Origin <chr>, Gene <chr>,
+## #   Log2TN <dbl>, Cohort <chr>, Region.of.Origin <chr>
+\end{verbatim}
+
+\hypertarget{plots}{%
+\subsubsection{3.2. Plots}\label{plots}}
+
+\hypertarget{question-1}{%
+\paragraph{3.2.1. Question 1}\label{question-1}}
+
+\textbf{Q1. Do other countries on multi-national CPTAC cohort also show
+4 TW cohort-specific characteristics(high percentage of nonsmokers, EGFR
+mutations, female, early stage)?}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggridges)}
+\FunctionTok{library}\NormalTok{(ggtext)}
+\FunctionTok{library}\NormalTok{(RColorBrewer)}
+\FunctionTok{library}\NormalTok{(ggrepel)}
+\FunctionTok{library}\NormalTok{(data.table)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## 다음의 패키지를 부착합니다: 'data.table'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     transpose
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     between, first, last
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Cohort{-}wise comparison of :}
+
+\CommentTok{\#1. Gender}
+\NormalTok{A }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Gender, }\AttributeTok{fill =}\NormalTok{ Cohort)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{..count..),}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{,}\AttributeTok{position=}\FunctionTok{position\_stack}\NormalTok{(}\FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"none"}\NormalTok{)}
+
+\CommentTok{\#2. Smoking status}
+\NormalTok{B }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Smoking.Status, }\AttributeTok{fill =}\NormalTok{ Cohort)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{..count..),}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{,}\AttributeTok{position=}\FunctionTok{position\_stack}\NormalTok{(}\FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"none"}\NormalTok{)}
+
+\CommentTok{\#3. LUAD stage}
+\NormalTok{C }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Stage, }\AttributeTok{fill =}\NormalTok{ Cohort)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{..count..),}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{,}\AttributeTok{position=}\FunctionTok{position\_stack}\NormalTok{(}\FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"none"}\NormalTok{)}
+
+\CommentTok{\#4. EGFR mutation status}
+\NormalTok{D }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(EGFR.mutation.status, }\AttributeTok{fill =}\NormalTok{ Cohort)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{..count..),}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{,}\AttributeTok{position=}\FunctionTok{position\_stack}\NormalTok{(}\FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{())}
+
+\FunctionTok{plot\_grid}\NormalTok{(A, B, C, D, }
+          \AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{assignment1_127_kim_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+As we can see, three of the four `Taiwan-specific' characteristics
+designated in Chen's research - high percentage of female, nonsmokers
+and EGFR mutations - do not appear globally in multi-nation CPTAC
+cohort. However, in both cohorts, early stage patients are dominant. To
+check if these properties are in fact Taiwan-specific or
+\emph{Asian}-specific, plots below show the 4 characteristics by region
+of origin(Asian and Western) in CPTAC cohort.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Region{-}wise comparison within CPTAC cohort}
+
+\CommentTok{\#1. Gender}
+\NormalTok{E }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Cohort }\SpecialCharTok{==} \StringTok{"Multi{-}nation"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Gender, }\AttributeTok{fill =}\NormalTok{ Region.of.Origin)) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\StringTok{"legend"}\NormalTok{, }\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"Asian"} \OtherTok{=} \StringTok{"orange"}\NormalTok{, }\StringTok{"Western"} \OtherTok{=} \StringTok{"green"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{..count..),}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{,}\AttributeTok{position=}\FunctionTok{position\_stack}\NormalTok{(}\FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"none"}\NormalTok{)}
+
+\CommentTok{\#2. Smoking status}
+\NormalTok{F }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Cohort }\SpecialCharTok{==} \StringTok{"Multi{-}nation"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Smoking.Status, }\AttributeTok{fill =}\NormalTok{ Region.of.Origin)) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\StringTok{"legend"}\NormalTok{, }\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"Asian"} \OtherTok{=} \StringTok{"orange"}\NormalTok{, }\StringTok{"Western"} \OtherTok{=} \StringTok{"green"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{..count..),}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{,}\AttributeTok{position=}\FunctionTok{position\_stack}\NormalTok{(}\FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"none"}\NormalTok{)}
+
+\CommentTok{\#3. LUAD stage}
+\NormalTok{G }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Cohort }\SpecialCharTok{==} \StringTok{"Multi{-}nation"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Stage, }\AttributeTok{fill =}\NormalTok{ Region.of.Origin)) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\StringTok{"legend"}\NormalTok{, }\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"Asian"} \OtherTok{=} \StringTok{"orange"}\NormalTok{, }\StringTok{"Western"} \OtherTok{=} \StringTok{"green"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{..count..),}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{,}\AttributeTok{position=}\FunctionTok{position\_stack}\NormalTok{(}\FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"none"}\NormalTok{)}
+
+\CommentTok{\#4. EGFR mutation status}
+\NormalTok{H }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Cohort }\SpecialCharTok{==} \StringTok{"Multi{-}nation"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(EGFR.mutation.status, }\AttributeTok{fill =}\NormalTok{ Region.of.Origin)) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\StringTok{"legend"}\NormalTok{, }\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"Asian"} \OtherTok{=} \StringTok{"orange"}\NormalTok{, }\StringTok{"Western"} \OtherTok{=} \StringTok{"green"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{..count..),}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{,}\AttributeTok{position=}\FunctionTok{position\_stack}\NormalTok{(}\FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{())}
+
+\FunctionTok{plot\_grid}\NormalTok{(E, F, G, H,}
+          \AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{assignment1_127_kim_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+As we can see, one of four characteristics - high percentage of
+nonsmoker - appears to be Asian-specific in CPTAC cohort.
+
+\textbf{Answer to question 1 :}
+
+In overall, these two sets of plots might indicate that high percentage
+of female and EGFR mutations are Taiwan-specific. Nonsmoker LUAD
+patients are dominant in Taiwan \emph{AND} other Asian countries. Early
+stage patients are dominant world-wide. In short, `early stage' patient
+characteristic is not Taiwan-specific, according to these two cohorts.
+
+\hypertarget{question-2}{%
+\paragraph{3.2.2. Question 2}\label{question-2}}
+
+\textbf{Q2. Compare gene expressions of `the 7 cancer related
+genes'(TP53, KRAS, STK11, EGFR, RB1, KEAP1, BRAF) by cohorts.}
+
+To answer question 2, we can create density ridge plot to visualize the
+gene expression by cohorts, and conduct ANOVA to compare the
+distributions.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  RNA level expression
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Density ridges plot}
+\NormalTok{I }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Gene }\SpecialCharTok{\%in\%} \StringTok{\textasciigrave{}}\AttributeTok{7\_gene\_list}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Gene =} \FunctionTok{fct\_reorder}\NormalTok{(}\AttributeTok{.f =}\NormalTok{ Gene, }\AttributeTok{.x =}\NormalTok{ Log2TN, }\AttributeTok{.fun =}\NormalTok{ mean)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Log2TN, Gene, }\AttributeTok{fill =}\NormalTok{ Cohort)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlim}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept =} \DecValTok{0}\NormalTok{))}
+\NormalTok{I}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Picking joint bandwidth of 0.214
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 9 rows containing non-finite values (stat_density_ridges).
+\end{verbatim}
+
+\includegraphics{assignment1_127_kim_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+Simply looking at the plot, gene expressions seem quite different
+between the cohorts. However, we do not know if distributions between
+two cohorts differ significantly or not by merely looking at the plot,
+so next I conducted ANOVA test.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 패키지 'ggpubr'는 R 버전 4.1.2에서 작성되었습니다
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## 다음의 패키지를 부착합니다: 'ggpubr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:cowplot':
+## 
+##     get_legend
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rstatix)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 패키지 'rstatix'는 R 버전 4.1.2에서 작성되었습니다
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## 다음의 패키지를 부착합니다: 'rstatix'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:janitor':
+## 
+##     make_clean_names
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     filter
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(emmeans)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: 패키지 'emmeans'는 R 버전 4.1.2에서 작성되었습니다
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Before ANOVA, check normality in each gene group : remove extreme outliers and label \textquotesingle{}\_aov\textquotesingle{}}
+\NormalTok{ex\_outliers }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Gene }\SpecialCharTok{\%in\%} \StringTok{\textasciigrave{}}\AttributeTok{7\_gene\_list}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Gene) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{identify\_outliers}\NormalTok{(Log2TN) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(is.extreme }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Log2TN) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pull}\NormalTok{()}
+
+\NormalTok{d\_RNA\_aov }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{Log2TN }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(ex\_outliers)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Gene }\SpecialCharTok{\%in\%} \StringTok{\textasciigrave{}}\AttributeTok{7\_gene\_list}\StringTok{\textasciigrave{}}\NormalTok{)}
+
+\NormalTok{J }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Gene }\SpecialCharTok{\%in\%} \StringTok{\textasciigrave{}}\AttributeTok{7\_gene\_list}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggqqplot}\NormalTok{(}\StringTok{"Log2TN"}\NormalTok{, }\AttributeTok{facet.by =} \StringTok{"Gene"}\NormalTok{)}
+
+\CommentTok{\#ANOVA test}
+\NormalTok{aov\_RNA }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{anova\_test}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Gene }\SpecialCharTok{*}\NormalTok{ Cohort)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aov\_RNA }\CommentTok{\#Note : Significant two{-}way interaction between Cohorts and Genes(p \textless{} 0.05).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## ANOVA Table (type II tests)
+## 
+##        Effect DFn  DFd      F        p p<.05   ges
+## 1        Gene   6 1312 62.956 8.98e-69     * 0.224
+## 2      Cohort   1 1312  8.546 4.00e-03     * 0.006
+## 3 Gene:Cohort   6 1312  7.217 1.36e-07     * 0.032
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Post{-}hoc tests}
+\CommentTok{\#1. Simple main effects : group the data by Gene}
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Gene }\SpecialCharTok{*}\NormalTok{ Cohort, }\AttributeTok{data =}\NormalTok{ d\_RNA\_aov)}
+\NormalTok{d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Gene) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{anova\_test}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Cohort, }\AttributeTok{error =}\NormalTok{ model) }\CommentTok{\#Note : Significant differences(p \textgreater{} 0.05) of 7 gene expressions (mean Log2T/N) between cohorts, except for BRAF and KEAP1.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+## Coefficient covariances computed by hccm()
+## Coefficient covariances computed by hccm()
+## Coefficient covariances computed by hccm()
+## Coefficient covariances computed by hccm()
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 7 x 8
+##   Gene  Effect   DFn   DFd     F         p `p<.05`   ges
+## * <chr> <chr>  <dbl> <dbl> <dbl>     <dbl> <chr>   <dbl>
+## 1 BRAF  Cohort     1  1312  2.65 0.104     ""      0.002
+## 2 EGFR  Cohort     1  1312 18.0  0.0000242 "*"     0.013
+## 3 KEAP1 Cohort     1  1312  3.52 0.061     ""      0.003
+## 4 KRAS  Cohort     1  1312  7.49 0.006     "*"     0.006
+## 5 RB1   Cohort     1  1312  6.48 0.011     "*"     0.005
+## 6 STK11 Cohort     1  1312  7.97 0.005     "*"     0.006
+## 7 TP53  Cohort     1  1312  5.78 0.016     "*"     0.004
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#2. Pairwise comparisons}
+\NormalTok{pwc }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Gene) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{emmeans\_test}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Cohort, }\AttributeTok{p.adjust.method =} \StringTok{"bonferroni"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Expected 2 pieces. Additional pieces discarded in 7 rows [1, 2, 3, 4,
+## 5, 6, 7].
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pwc}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 7 x 10
+##   Gene  term   .y.    group1 group2    df statistic       p   p.adj p.adj.signif
+## * <chr> <chr>  <chr>  <chr>  <chr>  <dbl>     <dbl>   <dbl>   <dbl> <chr>       
+## 1 BRAF  Cohort Log2TN Multi  nation  1312     -1.63 1.04e-1 1.04e-1 ns          
+## 2 EGFR  Cohort Log2TN Multi  nation  1312     -4.24 2.42e-5 2.42e-5 ****        
+## 3 KEAP1 Cohort Log2TN Multi  nation  1312     -1.88 6.07e-2 6.07e-2 ns          
+## 4 KRAS  Cohort Log2TN Multi  nation  1312      2.74 6.28e-3 6.28e-3 **          
+## 5 RB1   Cohort Log2TN Multi  nation  1312      2.54 1.11e-2 1.11e-2 *           
+## 6 STK11 Cohort Log2TN Multi  nation  1312     -2.82 4.82e-3 4.82e-3 **          
+## 7 TP53  Cohort Log2TN Multi  nation  1312     -2.40 1.63e-2 1.63e-2 *
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Visualize}
+\NormalTok{pwc }\OtherTok{\textless{}{-}}\NormalTok{ pwc }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{add\_xy\_position}\NormalTok{(}\AttributeTok{x =} \StringTok{"Gene"}\NormalTok{)}
+
+\NormalTok{K }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Gene =} \FunctionTok{fct\_reorder}\NormalTok{(}\AttributeTok{.f =}\NormalTok{ Gene, }\AttributeTok{.x =}\NormalTok{ Log2TN, }\AttributeTok{.fun =}\NormalTok{ mean)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Gene, }\AttributeTok{y =}\NormalTok{ Log2TN, }\AttributeTok{color =}\NormalTok{ Cohort)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Correlation between Cohorts per Gene"}\NormalTok{,}
+    \AttributeTok{subtitle =} \FunctionTok{get\_test\_label}\NormalTok{(aov\_RNA, }\AttributeTok{detailed =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{caption =} \FunctionTok{get\_pwc\_label}\NormalTok{(pwc)) }\SpecialCharTok{+}
+  \FunctionTok{stat\_compare\_means}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{group =}\NormalTok{ Cohort), }\AttributeTok{label =} \StringTok{"p.signif"}\NormalTok{)}
+\NormalTok{K}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{assignment1_127_kim_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\textbf{Answer to question 2 : (for RNA data)}
+
+According to ANOVA result, there are interactions between cohorts and 7
+genes on Log2T/N value(gene expression), with p \textless{} 0.0001(ANOVA
+test). Also, mean Log2T/N(gene expression) between two cohorts differ
+significantly, for five of the 7 genes(EGFR, KRAS, RB1, STK11, TP53),
+with p \textless{} 0.05(simple main effect, pairwise comparison).
+
+So, we verified that 5 gene expression variation of two cohorts differ
+from each other to a statistically meaningful extent. Then, what makes
+the difference between two cohorts? This leads to question 3.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Protein level expression
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Density ridges plot}
+\NormalTok{L }\OtherTok{\textless{}{-}}\NormalTok{ d\_Protein }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Gene }\SpecialCharTok{\%in\%} \StringTok{\textasciigrave{}}\AttributeTok{7\_gene\_list}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Gene =} \FunctionTok{fct\_reorder}\NormalTok{(}\AttributeTok{.f =}\NormalTok{ Gene, }\AttributeTok{.x =}\NormalTok{ Log2TN, }\AttributeTok{.fun =}\NormalTok{ mean)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Log2TN, Gene, }\AttributeTok{fill =}\NormalTok{ Cohort)) }\SpecialCharTok{+}  
+  \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlim}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept =} \DecValTok{0}\NormalTok{))}
+\NormalTok{L}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Picking joint bandwidth of 0.276
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 169 rows containing non-finite values (stat_density_ridges).
+\end{verbatim}
+
+\includegraphics{assignment1_127_kim_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+Here, we can clearly see that density ridge plot for protein-level
+expression is odd. It seems that multi-nation cohort's log2T/N values
+range much wider than that of Taiwan's. I addressed this problem in part
+4.2.
+
+\hypertarget{question-3}{%
+\paragraph{3.2.3. Question 3}\label{question-3}}
+
+\textbf{Q3. Are gene expression differences related to Taiwan
+cohort-specific characteristics?}
+
+To answer question 3, I created density ridge plots for 5 genes,
+excluding two(KEAP1, BRAF) that didn't show significant difference
+between cohorts. Then I conducted ANOVA test for the \textbf{three} TW
+cohort-specific characteristics(gender, smoking status, EGFR mutation
+status) verified in part 3.2.1. Question 1.
+
+\begin{itemize}
+\tightlist
+\item
+  RNA level expression
+\end{itemize}
+
+Are cohort-wise gene expression differences due to :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  Gender?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Density ridges plot}
+\NormalTok{M }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{filter}\NormalTok{(Gene }\SpecialCharTok{\%in\%} \StringTok{\textasciigrave{}}\AttributeTok{7\_gene\_list}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{Gene }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"KEAP1"}\NormalTok{, }\StringTok{"BRAF"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Gender)) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Gene =} \FunctionTok{fct\_reorder}\NormalTok{(}\AttributeTok{.f =}\NormalTok{ Gene, }\AttributeTok{.x =}\NormalTok{ Log2TN, }\AttributeTok{.fun =}\NormalTok{ mean)) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Log2TN, Gene, }\AttributeTok{fill =}\NormalTok{ Gender)) }\SpecialCharTok{+} 
+ \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{xlim}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept =} \DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+ \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle=}\StringTok{"Gender"}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.subtitle=}\FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\DecValTok{30}\NormalTok{),}
+ \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{14}\NormalTok{))}
+\NormalTok{M}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Picking joint bandwidth of 0.223
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 9 rows containing non-finite values (stat_density_ridges).
+\end{verbatim}
+
+\includegraphics{assignment1_127_kim_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ANOVA test}
+\NormalTok{aov\_RNA\_Gender }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{anova\_test}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Gene }\SpecialCharTok{*}\NormalTok{ Gender)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aov\_RNA\_Gender }\CommentTok{\#Note : No significant two{-}way interaction between Gender and Genes(p \textgreater{} 0.05).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## ANOVA Table (type II tests)
+## 
+##        Effect DFn  DFd      F        p p<.05   ges
+## 1        Gene   6 1312 61.180 5.45e-67     * 0.219
+## 2      Gender   1 1312  1.399 2.37e-01       0.001
+## 3 Gene:Gender   6 1312  1.864 8.40e-02       0.008
+\end{verbatim}
+
+The density plot might seem to have significant difference of Log2T/N
+variation between female and male. However, there are no significant
+interactions between gender and 7 genes, with p \textgreater{}
+0.05(ANOVA test).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Smoking status?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Density ridges plot}
+\NormalTok{N }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{filter}\NormalTok{(Gene }\SpecialCharTok{\%in\%} \StringTok{\textasciigrave{}}\AttributeTok{7\_gene\_list}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{Gene }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"KEAP1"}\NormalTok{, }\StringTok{"BRAF"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Smoking.Status)) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Gene =} \FunctionTok{fct\_reorder}\NormalTok{(}\AttributeTok{.f =}\NormalTok{ Gene, }\AttributeTok{.x =}\NormalTok{ Log2TN, }\AttributeTok{.fun =}\NormalTok{ mean)) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Log2TN, Gene, }\AttributeTok{fill =}\NormalTok{ Smoking.Status)) }\SpecialCharTok{+} 
+ \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"\#F8766D"}\NormalTok{, }\StringTok{"\#FFC425"}\NormalTok{, }\StringTok{"\#00BA38"}\NormalTok{)) }\SpecialCharTok{+}
+ \FunctionTok{xlim}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept =} \DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+ \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle=}\StringTok{"Smoking status"}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.subtitle=}\FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\DecValTok{30}\NormalTok{),}
+ \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{14}\NormalTok{))}
+\NormalTok{N}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Picking joint bandwidth of 0.256
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 9 rows containing non-finite values (stat_density_ridges).
+\end{verbatim}
+
+\includegraphics{assignment1_127_kim_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ANOVA test}
+\NormalTok{aov\_RNA\_Smoke }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{anova\_test}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Gene }\SpecialCharTok{*}\NormalTok{ Smoking.Status)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NA detected in rows: 641,642,643,644,645,646,647,753,754,755,756,757,758,759,1061,1062,1063,1064,1065,1066,1067,1138,1139,1140,1141,1142,1143,1144,1264,1265,1266,1267,1268,1269,1270,1278,1279,1280,1281,1282,1283,1284,1313,1314,1315,1316,1317,1318,1319.
+## Removing this rows before the analysis.
+\end{verbatim}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aov\_RNA\_Smoke }\CommentTok{\#Note : Significant two{-}way interaction between Smoking status and Genes(p \textless{} 0.05).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## ANOVA Table (type II tests)
+## 
+##                Effect DFn  DFd      F        p p<.05   ges
+## 1                Gene   6 1256 62.909 2.31e-68     * 0.231
+## 2      Smoking.Status   2 1256  5.557 4.00e-03     * 0.009
+## 3 Gene:Smoking.Status  12 1256  3.885 7.05e-06     * 0.036
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Post{-}hoc tests}
+\CommentTok{\#1. Simple main effects : group the data by Gene}
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Gene }\SpecialCharTok{*}\NormalTok{ Smoking.Status, }\AttributeTok{data =}\NormalTok{ d\_RNA\_aov)}
+\NormalTok{d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Gene) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{anova\_test}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Smoking.Status, }\AttributeTok{error =}\NormalTok{ model) }\CommentTok{\#Note : Significant differences(p \textgreater{} 0.05) of 7 gene expressions (mean Log2T/N) between smoking status {-} except for BRAF, KRAS, and RB1.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: NA detected in rows: 93,109,153,164,182,184,189.
+## Removing this rows before the analysis.
+\end{verbatim}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: NA detected in rows: 93,109,153,164,182,184,189.
+## Removing this rows before the analysis.
+\end{verbatim}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: NA detected in rows: 93,109,153,164,182,184,189.
+## Removing this rows before the analysis.
+\end{verbatim}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: NA detected in rows: 93,109,153,164,182,184,189.
+## Removing this rows before the analysis.
+\end{verbatim}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: NA detected in rows: 93,109,153,164,182,184,189.
+## Removing this rows before the analysis.
+\end{verbatim}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: NA detected in rows: 92,108,152,163,181,183,188.
+## Removing this rows before the analysis.
+\end{verbatim}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: NA detected in rows: 90,106,150,161,179,181,186.
+## Removing this rows before the analysis.
+\end{verbatim}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 7 x 8
+##   Gene  Effect           DFn   DFd      F          p `p<.05`      ges
+## * <chr> <chr>          <dbl> <dbl>  <dbl>      <dbl> <chr>      <dbl>
+## 1 BRAF  Smoking.Status     2  1256  0.142 0.867      ""      0.000227
+## 2 EGFR  Smoking.Status     2  1256 12.7   0.00000363 "*"     0.02    
+## 3 KEAP1 Smoking.Status     2  1256  3.30  0.037      "*"     0.005   
+## 4 KRAS  Smoking.Status     2  1256  1.09  0.338      ""      0.002   
+## 5 RB1   Smoking.Status     2  1256  1.77  0.17       ""      0.003   
+## 6 STK11 Smoking.Status     2  1256  4.99  0.007      "*"     0.008   
+## 7 TP53  Smoking.Status     2  1256  4.92  0.007      "*"     0.008
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#2. Pairwise comparisons}
+\NormalTok{pwc\_Smoke }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{Gene }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"KEAP1"}\NormalTok{, }\StringTok{"BRAF"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Gene) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{emmeans\_test}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Smoking.Status, }\AttributeTok{p.adjust.method =} \StringTok{"bonferroni"}\NormalTok{) }
+\NormalTok{pwc\_Smoke}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 15 x 10
+##    Gene  term   .y.   group1 group2    df statistic       p   p.adj p.adj.signif
+##  * <chr> <chr>  <chr> <chr>  <chr>  <dbl>     <dbl>   <dbl>   <dbl> <chr>       
+##  1 EGFR  Smoki~ Log2~ Curre~ Ex_Sm~   896   -2.51   1.23e-2 3.68e-2 *           
+##  2 EGFR  Smoki~ Log2~ Curre~ Nonsm~   896   -4.46   9.20e-6 2.76e-5 ****        
+##  3 EGFR  Smoki~ Log2~ Ex_Sm~ Nonsm~   896    0.519  6.04e-1 1   e+0 ns          
+##  4 KRAS  Smoki~ Log2~ Curre~ Ex_Sm~   896    0.988  3.23e-1 9.70e-1 ns          
+##  5 KRAS  Smoki~ Log2~ Curre~ Nonsm~   896    1.18   2.36e-1 7.09e-1 ns          
+##  6 KRAS  Smoki~ Log2~ Ex_Sm~ Nonsm~   896   -0.468  6.40e-1 1   e+0 ns          
+##  7 RB1   Smoki~ Log2~ Curre~ Ex_Sm~   896    0.894  3.71e-1 1   e+0 ns          
+##  8 RB1   Smoki~ Log2~ Curre~ Nonsm~   896    1.68   9.28e-2 2.79e-1 ns          
+##  9 RB1   Smoki~ Log2~ Ex_Sm~ Nonsm~   896   -0.141  8.88e-1 1   e+0 ns          
+## 10 STK11 Smoki~ Log2~ Curre~ Ex_Sm~   896    0.0932 9.26e-1 1   e+0 ns          
+## 11 STK11 Smoki~ Log2~ Curre~ Nonsm~   896   -2.74   6.29e-3 1.89e-2 *           
+## 12 STK11 Smoki~ Log2~ Ex_Sm~ Nonsm~   896   -1.38   1.69e-1 5.08e-1 ns          
+## 13 TP53  Smoki~ Log2~ Curre~ Ex_Sm~   896   -2.88   4.08e-3 1.22e-2 *           
+## 14 TP53  Smoki~ Log2~ Curre~ Nonsm~   896   -0.714  4.75e-1 1   e+0 ns          
+## 15 TP53  Smoki~ Log2~ Ex_Sm~ Nonsm~   896    2.65   8.14e-3 2.44e-2 *
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Visualize}
+\NormalTok{pwc\_Smoke }\OtherTok{\textless{}{-}}\NormalTok{ pwc\_Smoke }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{add\_xy\_position}\NormalTok{(}\AttributeTok{x =} \StringTok{"Gene"}\NormalTok{)}
+
+\NormalTok{O }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Smoking.Status)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{Gene }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"KEAP1"}\NormalTok{, }\StringTok{"BRAF"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Gene, }\AttributeTok{y =}\NormalTok{ Log2TN, }\AttributeTok{color =}\NormalTok{ Smoking.Status)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"\#F8766D"}\NormalTok{, }\StringTok{"\#FFC425"}\NormalTok{, }\StringTok{"\#00BA38"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Correlation between Smoking status per Gene"}\NormalTok{,}
+    \AttributeTok{subtitle =} \FunctionTok{get\_test\_label}\NormalTok{(aov\_RNA\_Smoke, }\AttributeTok{detailed =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{caption =} \FunctionTok{get\_pwc\_label}\NormalTok{(pwc\_Smoke)) }\SpecialCharTok{+}
+  \FunctionTok{stat\_pvalue\_manual}\NormalTok{(pwc\_Smoke, }\AttributeTok{label =} \StringTok{"p.adj.signif"}\NormalTok{, }\AttributeTok{hide.ns =} \ConstantTok{TRUE}\NormalTok{, )}
+\NormalTok{O}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{assignment1_127_kim_files/figure-latex/unnamed-chunk-14-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Pairs with significant p{-}value : ordered by p{-}value(ascending)}
+\NormalTok{pwc\_Smoke }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(p.adj.signif }\SpecialCharTok{!=} \StringTok{"ns"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{c}\NormalTok{(Gene, group1, group2, p)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(p) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{pair =} \FunctionTok{paste}\NormalTok{(Gene, }\FunctionTok{paste}\NormalTok{(group1, group2, }\AttributeTok{sep =} \StringTok{\textquotesingle{} \& \textquotesingle{}}\NormalTok{), }\AttributeTok{sep =} \StringTok{\textquotesingle{}/ \textquotesingle{}}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(pair)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 1
+##   pair                            
+##   <chr>                           
+## 1 EGFR/ Current_Smoker & Nonsmoke 
+## 2 TP53/ Current_Smoker & Ex_Smoker
+## 3 STK11/ Current_Smoker & Nonsmoke
+## 4 TP53/ Ex_Smoker & Nonsmoke      
+## 5 EGFR/ Current_Smoker & Ex_Smoker
+\end{verbatim}
+
+The density plot seem to have significant differences of Log2T/N
+variation between smoking status. In fact, there are significant
+interactions between smoking status and 5 genes on Log2T/N value(gene
+expression), with p \textless{} 0.0001(ANOVA test). Also, mean
+Log2T/N(gene expression) between three smoking status differ
+significantly in three genes - EGFR, TP53, STK11 - with p \textless{}
+0.05(simple main effect, pairwise comparison).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  EGFR mutation status?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Density ridges plot}
+\NormalTok{P }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{filter}\NormalTok{(Gene }\SpecialCharTok{\%in\%} \StringTok{\textasciigrave{}}\AttributeTok{7\_gene\_list}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{Gene }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"KEAP1"}\NormalTok{, }\StringTok{"BRAF"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(EGFR.mutation.status)) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Gene =} \FunctionTok{fct\_reorder}\NormalTok{(}\AttributeTok{.f =}\NormalTok{ Gene, }\AttributeTok{.x =}\NormalTok{ Log2TN, }\AttributeTok{.fun =}\NormalTok{ mean)) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Log2TN, Gene, }\AttributeTok{fill =}\NormalTok{ EGFR.mutation.status)) }\SpecialCharTok{+}  
+ \FunctionTok{geom\_density\_ridges}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"purple"}\NormalTok{)) }\SpecialCharTok{+}
+ \FunctionTok{xlim}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept =} \DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+ \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle=}\StringTok{"EGFR mutation status"}\NormalTok{) }\SpecialCharTok{+}
+ \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.subtitle=}\FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\DecValTok{30}\NormalTok{),}
+ \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{14}\NormalTok{))}
+
+\CommentTok{\#ANOVA test}
+\NormalTok{aov\_RNA\_EGFR }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{anova\_test}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Gene }\SpecialCharTok{*}\NormalTok{ EGFR.mutation.status)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aov\_RNA\_EGFR }\CommentTok{\#Note : Significant two{-}way interaction between EGFR mutation status and Genes(p \textless{} 0.05).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## ANOVA Table (type II tests)
+## 
+##                      Effect DFn  DFd      F        p p<.05   ges
+## 1                      Gene   6 1312 66.997 8.62e-73     * 0.235
+## 2      EGFR.mutation.status   1 1312 19.390 1.15e-05     * 0.015
+## 3 Gene:EGFR.mutation.status   6 1312 20.017 1.75e-22     * 0.084
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Post{-}hoc tests}
+\CommentTok{\#1. Simple main effects : group the data by Gene}
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Gene }\SpecialCharTok{*}\NormalTok{ EGFR.mutation.status, }\AttributeTok{data =}\NormalTok{ d\_RNA\_aov)}
+\NormalTok{d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Gene) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{anova\_test}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ EGFR.mutation.status, }\AttributeTok{error =}\NormalTok{ model) }\CommentTok{\#Note : Significant differences(p \textgreater{} 0.05) of 7 gene expressions (mean Log2T/N) between smoking status {-} except for KEAP1, KRAS, TP53.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Coefficient covariances computed by hccm()
+## Coefficient covariances computed by hccm()
+## Coefficient covariances computed by hccm()
+## Coefficient covariances computed by hccm()
+## Coefficient covariances computed by hccm()
+## Coefficient covariances computed by hccm()
+## Coefficient covariances computed by hccm()
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 7 x 8
+##   Gene  Effect                 DFn   DFd       F        p `p<.05`      ges
+## * <chr> <chr>                <dbl> <dbl>   <dbl>    <dbl> <chr>      <dbl>
+## 1 BRAF  EGFR.mutation.status     1  1312  10.9   9.79e- 4 "*"     0.008   
+## 2 EGFR  EGFR.mutation.status     1  1312 103.    1.95e-23 "*"     0.073   
+## 3 KEAP1 EGFR.mutation.status     1  1312   0.722 3.96e- 1 ""      0.00055 
+## 4 KRAS  EGFR.mutation.status     1  1312   2.11  1.46e- 1 ""      0.002   
+## 5 RB1   EGFR.mutation.status     1  1312  17.4   3.31e- 5 "*"     0.013   
+## 6 STK11 EGFR.mutation.status     1  1312   4.24  4   e- 2 "*"     0.003   
+## 7 TP53  EGFR.mutation.status     1  1312   0.729 3.94e- 1 ""      0.000555
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#2. Pairwise comparisons}
+\NormalTok{pwc\_EGFR }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{Gene }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"KEAP1"}\NormalTok{, }\StringTok{"BRAF"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Gene) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{emmeans\_test}\NormalTok{(Log2TN }\SpecialCharTok{\textasciitilde{}}\NormalTok{ EGFR.mutation.status, }\AttributeTok{p.adjust.method =} \StringTok{"bonferroni"}\NormalTok{) }
+\NormalTok{pwc\_EGFR}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 10
+##   Gene  term  .y.   group1 group2    df statistic        p    p.adj p.adj.signif
+## * <chr> <chr> <chr> <chr>  <chr>  <dbl>     <dbl>    <dbl>    <dbl> <chr>       
+## 1 EGFR  EGFR~ Log2~ 0      1        936    -9.37  5.48e-20 5.48e-20 ****        
+## 2 KRAS  EGFR~ Log2~ 0      1        936     1.34  1.81e- 1 1.81e- 1 ns          
+## 3 RB1   EGFR~ Log2~ 0      1        936     3.84  1.33e- 4 1.33e- 4 ***         
+## 4 STK11 EGFR~ Log2~ 0      1        936    -1.90  5.84e- 2 5.84e- 2 ns          
+## 5 TP53  EGFR~ Log2~ 0      1        936    -0.786 4.32e- 1 4.32e- 1 ns
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Visualize}
+\NormalTok{pwc\_EGFR }\OtherTok{\textless{}{-}}\NormalTok{ pwc\_EGFR }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{add\_xy\_position}\NormalTok{(}\AttributeTok{x =} \StringTok{"Gene"}\NormalTok{)}
+
+\NormalTok{Q }\OtherTok{\textless{}{-}}\NormalTok{ d\_RNA\_aov }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(EGFR.mutation.status)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\NormalTok{Gene }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"KEAP1"}\NormalTok{, }\StringTok{"BRAF"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Gene, }\AttributeTok{y =}\NormalTok{ Log2TN, }\AttributeTok{color =}\NormalTok{ EGFR.mutation.status)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"purple"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Correlation between EGFR mutation status per Gene"}\NormalTok{,}
+    \AttributeTok{subtitle =} \FunctionTok{get\_test\_label}\NormalTok{(aov\_RNA\_EGFR, }\AttributeTok{detailed =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{caption =} \FunctionTok{get\_pwc\_label}\NormalTok{(pwc\_EGFR)) }\SpecialCharTok{+}
+  \FunctionTok{stat\_pvalue\_manual}\NormalTok{(pwc\_EGFR, }\AttributeTok{label =} \StringTok{"p.adj.signif"}\NormalTok{, }\AttributeTok{hide.ns =} \ConstantTok{TRUE}\NormalTok{, )}
+\end{Highlighting}
+\end{Shaded}
+
+By looking at density plot, I expected EGFR and RB1 to have
+statistically meaningful difference between EGFR mutation existence and
+nonexistence. And this time, I guessed accurately. There are significant
+interactions between EGFR mutation status and 5 genes on Log2T/N
+value(gene expression), with p \textless{} 0.0001(ANOVA test). Also,
+mean Log2T/N(gene expression) between EGFR mutation state differ
+significantly in two genes - EGFR and RB1 - with p \textless{}
+0.05(simple main effect, pairwise comparison).
+
+\textbf{Answer to question 3 : (for RNA data)}
+
+The density plot might seem to have significant difference of Log2T/N
+variation between female and male. However, there are no significant
+interactions between gender and 7 genes, with p \textgreater{}
+0.05(ANOVA test).
+
+The density plot seem to have significant differences of Log2T/N
+variation between smoking status. In fact, there are significant
+interactions between smoking status and 5 genes on Log2T/N value(gene
+expression), with p \textless{} 0.0001(ANOVA test). Also, mean
+Log2T/N(gene expression) between three smoking status differ
+significantly in three genes - EGFR, TP53, STK11 - with p \textless{}
+0.05(simple main effect, pairwise comparison).
+
+By looking at density plot, I expected EGFR and RB1 to have
+statistically meaningful difference between EGFR mutation existence and
+nonexistence. And this time, I guessed accurately. There are significant
+interactions between EGFR mutation status and 5 genes on Log2T/N
+value(gene expression), with p \textless{} 0.0001(ANOVA test). Also,
+mean Log2T/N(gene expression) between EGFR mutation state differ
+significantly in two genes - EGFR and RB1 - with p \textless{}
+0.05(simple main effect, pairwise comparison).
+
+\hypertarget{discussion}{%
+\subsection{4. Discussion}\label{discussion}}
+
+Combine the plots
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Answer 1}
+\FunctionTok{plot\_grid}\NormalTok{(A, B, C, D, E, F, G, H,}
+          \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"D"}\NormalTok{, }\StringTok{"E"}\NormalTok{, }\StringTok{"F"}\NormalTok{, }\StringTok{"G"}\NormalTok{, }\StringTok{"H"}\NormalTok{),}
+          \AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{assignment1_127_kim_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Answer 2}
+\FunctionTok{plot\_grid}\NormalTok{(I, J, K, L,}
+          \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"D"}\NormalTok{),}
+          \AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Picking joint bandwidth of 0.214
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 9 rows containing non-finite values (stat_density_ridges).
+\end{verbatim}
+
+\begin{verbatim}
+## Picking joint bandwidth of 0.276
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 169 rows containing non-finite values (stat_density_ridges).
+\end{verbatim}
+
+\includegraphics{assignment1_127_kim_files/figure-latex/unnamed-chunk-16-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Answer 3}
+\FunctionTok{plot\_grid}\NormalTok{(M, N, O, P, Q,}
+          \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"D"}\NormalTok{, }\StringTok{"E"}\NormalTok{),}
+          \AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Picking joint bandwidth of 0.223
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 9 rows containing non-finite values (stat_density_ridges).
+\end{verbatim}
+
+\begin{verbatim}
+## Picking joint bandwidth of 0.256
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 9 rows containing non-finite values (stat_density_ridges).
+\end{verbatim}
+
+\begin{verbatim}
+## Picking joint bandwidth of 0.218
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 9 rows containing non-finite values (stat_density_ridges).
+\end{verbatim}
+
+\includegraphics{assignment1_127_kim_files/figure-latex/unnamed-chunk-16-3.pdf}
+
+\hypertarget{summarizing-and-discussing-the-results}{%
+\subsubsection{4.1. Summarizing and discussing the
+results}\label{summarizing-and-discussing-the-results}}
+
+for Q1: However, if the sample sizes grow in the future, the new samples
+might represent the whole population better and results might change.
+
+\hypertarget{imperfections-in-data-munging-related-to-figure}{%
+\subsubsection{4.2. Imperfections in data munging (related to figure
+??)}\label{imperfections-in-data-munging-related-to-figure}}
+
+To answer questions 2 and 3 on both transcriptome and proteome level, I
+had to include plots for both. However, when drawing plots with
+protein-level expression data, I found out that \textbf{log2T/N value
+range differed greatly} between two cohorts, as we can see here:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{range}\NormalTok{(d\_TW\_Protein\_T}\SpecialCharTok{$}\NormalTok{Log2TN, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2.458390  3.595272
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{range}\NormalTok{(d\_CPTAC\_Protein\_T}\SpecialCharTok{$}\NormalTok{Log2TN, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -7.5338 11.6585
+\end{verbatim}
+
+After inspecting, I found out that normalization methods differed
+between Chen's and Gillette's research, since TW protein data was
+normalized by median, and CPTAC protein data was normalized by
+`two-component normalization' method. Since I could not convert
+two-component normalized data into median normalized data, I failed in
+attempting to compare protein-level expressions between two cohorts.
+
+\hypertarget{suggestions-for-further-investigations}{%
+\subsubsection{4.3. Suggestions for further
+investigations}\label{suggestions-for-further-investigations}}
+
+(Short sum) In this portfolio, I mainly examined the difference between
+TW cohort and CPTAC cohort, and inspected in detail by answering 4
+questions. As a result, I verified that the 4 Taiwan-specific
+characteristics of LUAD patients mentioned in Chen's research were
+prominent compared to CPTAC's multi-national cohort. Those 4 properties
+\emph{were} responsible for the gene expression differences between
+cohorts, and I concluded that there might be more implicit
+differentiating characteristics. I also investigated the correlation of
+the 7 cancer related genes' over-/under-expressions with presence of
+somatic muations and other patient properties, and made a careful
+suggestion: TP53 and EGFR gene mutations might be strongly correlated
+with over-expression. The 7 genes' expression also seemed to differ due
+to some patient properties, including gender, smoking status, country of
+origin, and LUAD stage. In addition, I addressed some precautions when
+interpreting the visualized data and the problem I encountered with
+protein expression data too.
+
+For further investigations, I would suggest
+\textasciitilde\textasciitilde.
+
+\hypertarget{resource}{%
+\subsection{5. Resource}\label{resource}}
+
+Gillette, M. et al.~(2020). Proteogenomic Characterization Reveals
+Therapeutic Vulnerabilities in Lung Adenocarcinoma. \emph{Cell, 182(1)},
+200-225. \url{doi:https://doi.org/10.1016/j.cell.2020.06.013}
+
+Chen, Y. et al.~(2020). Proteogenomics of Non-smoking Lung Cancer in
+East Asia Delineates Molecular Signatures of Pathogenesis and
+Progression. \emph{Cell, 182(1)}, 226,244
+\url{doi:https://doi.org/10.1016/j.cell.2020.06.012}
+
+\end{document}
